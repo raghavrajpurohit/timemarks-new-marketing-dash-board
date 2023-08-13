@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ChannelPage extends StatefulWidget {
   const ChannelPage({super.key});
-  static const String pageId = "/";
+  static const String pageId = "/channel";
 
   @override
   State<ChannelPage> createState() => _ChannelPageState();

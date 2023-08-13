@@ -1,7 +1,9 @@
 import 'package:go_router/go_router.dart';
-import 'package:new_marketing_dash_board/pages/Hirring.dart';
-import 'package:new_marketing_dash_board/pages/channel.dart';
 
+import 'package:new_marketing_dash_board/pages/hirring.dart';
+import 'package:new_marketing_dash_board/pages/channel.dart';
+import 'package:new_marketing_dash_board/pages/homePage.dart';
+import 'package:new_marketing_dash_board/reponsive.dart';
 
 class MyRoutes {
   static routeFunction() {
@@ -17,7 +19,13 @@ class MyRoutes {
         builder: (context, state) {
           return const HirringPage();
         },
-      )
+      ),
+      GoRoute(
+        path: HomePage.pageId,
+        builder: (context, state) {
+          return const HomePage();
+        },
+      ),
     ]);
     return routes;
   }
