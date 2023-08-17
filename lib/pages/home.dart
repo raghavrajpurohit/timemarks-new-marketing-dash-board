@@ -21,9 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final bool _includeBaseDestinationsInMenu = false;
   final bool _fabInRail = true;
 
-  // bool _fabInRail = true;
-  // bool _includeBaseDestinationsInMenu = true;
-
   @override
   Widget build(BuildContext context) {
     return AdaptiveNavigationScaffold(
@@ -44,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     MyTextWidget(
                       content: "Satish Sir",
@@ -84,9 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _body(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.only(top: 25, left: 30, right: 30, bottom: 8),
-        child: Container(
-            // decoration: BoxDecoration(color: MyColor.drawerColor),
-            child: Column(children: [
+        child: Column(children: [
           Expanded(
             flex: 1,
             child: Row(
@@ -296,7 +290,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     MyTextWidget(
                                       content: m["type"],
                                       myColor: MyColor.blackText,
-                                      // fontbold: FontWeight.bold,
                                       fontSize: 14,
                                     ),
                                   ),
@@ -305,142 +298,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           )))
                 ]),
               ))
-          // Expanded(
-          //     flex: 9,
-          //     child: Container(
-          //       decoration: BoxDecoration(
-          //           color: MyColor.appBarColor,
-          //           border: Border.all(color: MyColor.blackText),
-          //           borderRadius: BorderRadius.circular(8)),
-          //       child: Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: Column(children: [_UpperRow(context)]),
-          //       ),
-          //     ))
-        ])));
+        ]));
   }
 }
-
-// Widget _UpperRow(context) {
-//   return Row(
-//     children: [
-//       Expanded(
-//         flex: 3,
-//         child: Container(
-//           decoration: BoxDecoration(
-//               color: MyColor.drawerColor,
-//               border: Border.all(color: MyColor.blackText),
-//               borderRadius: BorderRadius.circular(15)),
-//           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-//             MyTextWidget(
-//               content: "Bulk",
-//               myColor: MyColor.blackText,
-//             ),
-//             const Icon(Icons.arrow_drop_down)
-//           ]),
-//         ),
-//       ),
-//       const SizedBox(
-//         width: 10,
-//       ),
-//       Expanded(
-//         flex: 2,
-//         child: Container(
-//           height: 30,
-//           decoration: BoxDecoration(
-//               color: MyColor.drawerColor,
-//               border: Border.all(color: MyColor.blackText),
-//               borderRadius: BorderRadius.circular(15)),
-//           child: Center(
-//             child: MyTextWidget(
-//               content: "Apply",
-//               myColor: MyColor.blackText,
-//             ),
-//           ),
-//         ),
-//       ),
-//       const SizedBox(
-//         width: 20,
-//       ),
-//       Expanded(
-//         flex: 3,
-//         child: Container(
-//           height: 30,
-//           decoration: BoxDecoration(
-//               color: MyColor.drawerColor,
-//               border: Border.all(color: MyColor.blackText),
-//               borderRadius: BorderRadius.circular(15)),
-//           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-//             MyTextWidget(
-//               content: "Verfied",
-//               myColor: MyColor.blackText,
-//             ),
-//             const Icon(Icons.arrow_drop_down)
-//           ]),
-//         ),
-//       ),
-//       const SizedBox(
-//         width: 10,
-//       ),
-//       Expanded(
-//         flex: 3,
-//         child: Container(
-//           height: 30,
-//           decoration: BoxDecoration(
-//               color: MyColor.drawerColor,
-//               border: Border.all(color: MyColor.blackText),
-//               borderRadius: BorderRadius.circular(15)),
-//           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-//             MyTextWidget(
-//               content: "All Types",
-//               myColor: MyColor.blackText,
-//             ),
-//             const Icon(Icons.arrow_drop_down)
-//           ]),
-//         ),
-//       ),
-//       const SizedBox(
-//         width: 10,
-//       ),
-//       Expanded(
-//         flex: 4,
-//         child: Container(
-//           height: 30,
-//           decoration: BoxDecoration(
-//               color: MyColor.drawerColor,
-//               border: Border.all(color: MyColor.blackText),
-//               borderRadius: BorderRadius.circular(15)),
-//           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-//             MyTextWidget(
-//               content: "Highest Members",
-//               myColor: MyColor.blackText,
-//             ),
-//             const Icon(Icons.arrow_drop_down)
-//           ]),
-//         ),
-//       ),
-//       const SizedBox(
-//         width: 10,
-//       ),
-//       Expanded(
-//         flex: 2,
-//         child: Container(
-//           height: 30,
-//           decoration: BoxDecoration(
-//               color: MyColor.drawerColor,
-//               border: Border.all(color: MyColor.blackText),
-//               borderRadius: BorderRadius.circular(15)),
-//           child: Center(
-//             child: MyTextWidget(
-//               content: "FILTER",
-//               myColor: MyColor.blackText,
-//             ),
-//           ),
-//         ),
-//       )
-//     ],
-//   );
-// }
 
 const _allDestinations = [
   AdaptiveScaffoldDestination(title: "Channels", icon: MyFlutterApp.channel),
@@ -454,52 +314,6 @@ const _allDestinations = [
   AdaptiveScaffoldDestination(title: 'Info', icon: Icons.info),
 ];
 
-// Widget __upppperrow() {
-//   return Row(
-//     children: [
-//       Row(
-//         children: [
-//           Container(
-//             decoration: BoxDecoration(
-//                 color: MyColor.drawerColor,
-//                 border: Border.all(color: MyColor.blackText),
-//                 borderRadius: BorderRadius.circular(30)),
-//             child: Padding(
-//               padding: const EdgeInsets.only(
-//                   top: 14, left: 20, right: 20, bottom: 14),
-//               child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     DropdownButton(
-//                       items: [
-//                         DropdownMenuItem(
-//                           value: "Bulk Action",
-//                           child: MyTextWidget(
-//                             content: "Bulk Action",
-//                             myColor: MyColor.blackText,
-//                           ),
-//                         ),
-//                       ],
-//                       isExpanded: true,
-//                       onChanged: (Object? value) {},
-//                     )
-//                     // MyTextWidget(
-//                     //   content: "Bulk Action",
-//                     //   myColor: MyColor.blackText,
-//                     //   fontSize: 20,
-//                     // ),
-//                     // const Icon(Icons.arrow_drop_down)
-//                   ]),
-//             ),
-//           ),
-//         ],
-//       ),
-//       const Row(
-//         children: [],
-//       )
-//     ],
-//   );
-// }
 List<Map<String, dynamic>> tabelList = [
   {
     "name": "Sarkari Job",
