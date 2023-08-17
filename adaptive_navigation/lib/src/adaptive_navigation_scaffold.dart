@@ -3,7 +3,6 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:math' as math;
-
 import 'package:adaptive_breakpoints/adaptive_breakpoints.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -195,15 +194,21 @@ class AdaptiveNavigationScaffold extends StatelessWidget {
   ///drawer for mobile
   Drawer _defaultDrawer(List<AdaptiveScaffoldDestination> destinations) {
     return Drawer(
-      backgroundColor: Colors.white,
+      backgroundColor: drawerColor,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       child: ListView(
         children: [
           if (drawerHeader != null) drawerHeader!,
           for (int i = 0; i < destinations.length; i++)
             ListTile(
-              leading: Icon(destinations[i].icon),
-              title: Text(destinations[i].title),
+              leading: Icon(
+                destinations[i].icon,
+                color: drawerTextColor,
+              ),
+              title: Text(
+                destinations[i].title,
+                style: TextStyle(color: drawerTextColor),
+              ),
               onTap: () {
                 onDestinationSelected?.call(i);
               },

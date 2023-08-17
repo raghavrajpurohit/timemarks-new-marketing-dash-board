@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:new_marketing_dash_board/routes.dart';
-import 'package:new_marketing_dash_board/ui/colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routerConfig: MyRoutes.routeFunction(),
       title: 'Studyem',
       theme: ThemeData(
