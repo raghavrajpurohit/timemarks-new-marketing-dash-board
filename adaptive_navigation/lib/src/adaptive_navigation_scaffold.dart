@@ -365,14 +365,31 @@ class AdaptiveNavigationScaffold extends StatelessWidget {
             children: [
               if (drawerHeader != null) drawerHeader!,
               for (final destination in destinations)
-                ListTile(
-                  leading: Icon(destination.icon),
-                  title: Text(
-                    destination.title,
-                    style: TextStyle(color: drawerTextColor),
-                  ),
-                  selected: destinations.indexOf(destination) == selectedIndex,
-                  onTap: () => _destinationTapped(destination),
+                Row(
+                  children: [
+                    Container(
+                      height: 40,
+                      width: 5,
+                      color: destinations.indexOf(destination) == selectedIndex
+                          ? Colors.white
+                          : Colors.transparent,
+                    ),
+                    Expanded(
+                      child: ListTile(
+                        leading: Icon(
+                          destination.icon,
+                          color: drawerTextColor,
+                        ),
+                        title: Text(
+                          destination.title,
+                          style: TextStyle(color: drawerTextColor),
+                        ),
+                        selected:
+                            destinations.indexOf(destination) == selectedIndex,
+                        onTap: () => _destinationTapped(destination),
+                      ),
+                    ),
+                  ],
                 ),
               const Spacer(),
               if (drawerFooter != null) drawerFooter!,

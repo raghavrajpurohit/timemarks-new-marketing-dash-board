@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 
-import 'package:new_marketing_dash_board/pages/home.dart';
+import 'package:new_marketing_dash_board/pages/home_page.dart';
 
 class MyRoutes {
   static routeFunction() {
@@ -10,7 +10,7 @@ class MyRoutes {
         builder: (context, state) {
           return const HomeScreen();
         },
-      )
+      ),
     ]);
     return routes;
   }
