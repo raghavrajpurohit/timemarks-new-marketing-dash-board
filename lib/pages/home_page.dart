@@ -1,6 +1,7 @@
 import 'package:adaptive_navigation/adaptive_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:new_marketing_dash_board/pages/Channel.dart.dart';
+import 'package:new_marketing_dash_board/responsive.dart';
 import 'package:new_marketing_dash_board/ui/my_flutter_app_icons.dart';
 
 import 'package:new_marketing_dash_board/ui/colors.dart';
@@ -20,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final bool _includeBaseDestinationsInMenu = false;
   final bool _fabInRail = true;
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
   List<Widget> allPages = [
     const ChannelScreen(),
     const HirringScreen(),
@@ -42,6 +43,13 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AdaptiveAppBar(
         backgroundColor: MyColor.appBarColor,
         elevation: 10,
+        title: !(ResponsiveD.d(context) == ResponsiveD.desktop)
+            ? MyTextWidget(
+                content: "STUDYEM",
+                fontbold: FontWeight.bold,
+                myColor: MyColor.drawerColor.withOpacity(0.7),
+              )
+            : null,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10),

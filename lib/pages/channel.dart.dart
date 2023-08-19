@@ -69,10 +69,14 @@ class _ChannelScreenState extends State<ChannelScreen> {
                     children: [
                       Expanded(
                         child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: MyColor.borderColor),
-                                borderRadius: BorderRadius.circular(8))),
+                          height: 50,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: MyColor.borderColor),
+                              borderRadius: BorderRadius.circular(8)),
+                          child: ResponsiveD.d(context) == ResponsiveD.desktop
+                              ? _upperRowWeb(context)
+                              : mobileDropDown(),
+                        ),
                       )
                     ],
                   ),
@@ -416,3 +420,586 @@ List<Map<String, dynamic>> tabelList = [
     "type": "Public"
   },
 ];
+
+Widget mobileDropDown() {
+  return Padding(
+    padding: const EdgeInsets.all(4.0),
+    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      Container(
+        decoration: BoxDecoration(
+            border: Border.all(
+              color: MyColor.borderColor,
+            ),
+            borderRadius: BorderRadius.circular(22)),
+        child: MenuAnchor(
+          style: MenuStyle(
+            // maximumSize: MaterialStateProperty.all(const Size(300, 400)),
+            elevation: MaterialStateProperty.all(10),
+          ),
+          menuChildren: <Widget>[
+            MenuItemButton(
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(Icons.delete_outline_outlined),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text("Delete")
+                ],
+              ),
+              onPressed: () {},
+            ),
+            MenuItemButton(
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(
+                    Icons.verified_user_outlined,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text("Verify")
+                ],
+              ),
+              onPressed: () {},
+            )
+          ],
+          builder:
+              (BuildContext context, MenuController controller, Widget? child) {
+            return TextButton(
+                onPressed: () {
+                  if (controller.isOpen) {
+                    controller.close();
+                  } else {
+                    controller.open();
+                  }
+                },
+                child: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                    ? const Padding(
+                        padding: EdgeInsets.only(
+                            left: 25, right: 25, top: 9, bottom: 9),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Bulk Action'),
+                            Icon(
+                              Icons.arrow_drop_down_outlined,
+                              size: 22,
+                            )
+                          ],
+                        ),
+                      )
+                    : const Padding(
+                        padding: EdgeInsets.only(
+                            left: 10, right: 10, top: 9, bottom: 9),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Bulk Action'),
+                            Icon(
+                              Icons.arrow_drop_down_outlined,
+                              size: 22,
+                            )
+                          ],
+                        ),
+                      ));
+          },
+        ),
+      ),
+      Container(
+        decoration: BoxDecoration(
+            color: MyColor.greyWidgetColor.withOpacity(0.20),
+            border: Border.all(
+              color: MyColor.borderColor,
+            ),
+            borderRadius: BorderRadius.circular(22)),
+        child: MenuAnchor(
+          style: MenuStyle(
+            // maximumSize: MaterialStateProperty.all(const Size(300, 400)),
+            elevation: MaterialStateProperty.all(10),
+          ),
+          menuChildren: <Widget>[
+            SubmenuButton(
+              menuChildren: [
+                MenuItemButton(
+                  child: const Text("VERIFIED-1"),
+                  onPressed: () {},
+                ),
+                MenuItemButton(
+                  child: const Text("VERIFIED-2"),
+                  onPressed: () {},
+                ),
+              ],
+              child: const Text("VERIFIED"),
+            ),
+            SubmenuButton(
+              menuChildren: [
+                MenuItemButton(
+                  child: const Text("TYPE-1"),
+                  onPressed: () {},
+                ),
+                MenuItemButton(
+                  child: const Text("TYPE-2"),
+                  onPressed: () {},
+                ),
+              ],
+              child: const Text("ALL TYPES"),
+            ),
+            SubmenuButton(
+              menuChildren: [
+                MenuItemButton(
+                  child: const Text("MEMBERS-1"),
+                  onPressed: () {},
+                ),
+                MenuItemButton(
+                  child: const Text("MEMBERS-2 "),
+                  onPressed: () {},
+                ),
+              ],
+              child: const Text("HIGHEST MEMBERS"),
+            ),
+          ],
+          builder:
+              (BuildContext context, MenuController controller, Widget? child) {
+            return TextButton(
+                onPressed: () {
+                  if (controller.isOpen) {
+                    controller.close();
+                  } else {
+                    controller.open();
+                  }
+                },
+                child: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                    ? const Padding(
+                        padding: EdgeInsets.only(
+                            left: 25, right: 25, top: 9, bottom: 9),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('FILTER'),
+                            Icon(
+                              Icons.arrow_drop_down_outlined,
+                              size: 22,
+                            )
+                          ],
+                        ),
+                      )
+                    : const Padding(
+                        padding: EdgeInsets.only(
+                            left: 10, right: 10, top: 9, bottom: 9),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('FILTER'),
+                            Icon(
+                              Icons.arrow_drop_down_outlined,
+                              size: 22,
+                            )
+                          ],
+                        ),
+                      ));
+          },
+        ),
+      )
+    ]),
+  );
+}
+
+Widget _upperRowWeb(context) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      // FIRST
+      Padding(
+        padding: const EdgeInsets.all(4),
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border.all(
+                color: MyColor.borderColor,
+              ),
+              borderRadius: BorderRadius.circular(22)),
+          child: MenuAnchor(
+            style: MenuStyle(
+              // maximumSize: MaterialStateProperty.all(const Size(300, 400)),
+              elevation: MaterialStateProperty.all(10),
+            ),
+            menuChildren: <Widget>[
+              MenuItemButton(
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(Icons.delete_outline_outlined),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text("Delete")
+                  ],
+                ),
+                onPressed: () {},
+              ),
+              MenuItemButton(
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Icon(
+                      Icons.verified_user_outlined,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text("Verify")
+                  ],
+                ),
+                onPressed: () {},
+              )
+            ],
+            builder: (BuildContext context, MenuController controller,
+                Widget? child) {
+              return TextButton(
+                  onPressed: () {
+                    if (controller.isOpen) {
+                      controller.close();
+                    } else {
+                      controller.open();
+                    }
+                  },
+                  child: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                      ? const Padding(
+                          padding: EdgeInsets.only(
+                              left: 25, right: 25, top: 9, bottom: 9),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('Bulk Action'),
+                              Icon(
+                                Icons.arrow_drop_down_outlined,
+                                size: 22,
+                              )
+                            ],
+                          ),
+                        )
+                      : const Padding(
+                          padding: EdgeInsets.only(
+                              left: 10, right: 10, top: 9, bottom: 9),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('Bulk Action'),
+                              Icon(
+                                Icons.arrow_drop_down_outlined,
+                                size: 22,
+                              )
+                            ],
+                          ),
+                        ));
+            },
+          ),
+        ),
+      ),
+
+      // second
+      Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    color: MyColor.borderColor,
+                  ),
+                  borderRadius: BorderRadius.circular(22)),
+              child: MenuAnchor(
+                style: MenuStyle(
+                  // maximumSize: MaterialStateProperty.all(const Size(300, 400)),
+                  elevation: MaterialStateProperty.all(10),
+                ),
+                menuChildren: <Widget>[
+                  MenuItemButton(
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(Icons.delete_outline_outlined),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("Item 1")
+                      ],
+                    ),
+                    onPressed: () {},
+                  ),
+                  MenuItemButton(
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Icon(
+                          Icons.verified_user_outlined,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("Item 2")
+                      ],
+                    ),
+                    onPressed: () {},
+                  )
+                ],
+                builder: (BuildContext context, MenuController controller,
+                    Widget? child) {
+                  return TextButton(
+                      onPressed: () {
+                        if (controller.isOpen) {
+                          controller.close();
+                        } else {
+                          controller.open();
+                        }
+                      },
+                      child: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                          ? const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 25, right: 25, top: 9, bottom: 9),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('Verified'),
+                                  Icon(
+                                    Icons.arrow_drop_down_outlined,
+                                    size: 22,
+                                  )
+                                ],
+                              ),
+                            )
+                          : const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 10, right: 10, top: 9, bottom: 9),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('Verified'),
+                                  Icon(
+                                    Icons.arrow_drop_down_outlined,
+                                    size: 22,
+                                  )
+                                ],
+                              ),
+                            ));
+                },
+              ),
+            ),
+          ),
+
+          //third
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    color: MyColor.borderColor,
+                  ),
+                  borderRadius: BorderRadius.circular(22)),
+              child: MenuAnchor(
+                style: MenuStyle(
+                  // maximumSize: MaterialStateProperty.all(const Size(300, 400)),
+                  elevation: MaterialStateProperty.all(10),
+                ),
+                menuChildren: <Widget>[
+                  MenuItemButton(
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(Icons.delete_outline_outlined),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("Type 1")
+                      ],
+                    ),
+                    onPressed: () {},
+                  ),
+                  MenuItemButton(
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Icon(
+                          Icons.verified_user_outlined,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("Type 2")
+                      ],
+                    ),
+                    onPressed: () {},
+                  )
+                ],
+                builder: (BuildContext context, MenuController controller,
+                    Widget? child) {
+                  return TextButton(
+                      onPressed: () {
+                        if (controller.isOpen) {
+                          controller.close();
+                        } else {
+                          controller.open();
+                        }
+                      },
+                      child: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                          ? const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 25, right: 25, top: 9, bottom: 9),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('All Type'),
+                                  Icon(
+                                    Icons.arrow_drop_down_outlined,
+                                    size: 22,
+                                  )
+                                ],
+                              ),
+                            )
+                          : const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 10, right: 10, top: 9, bottom: 9),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('All Type'),
+                                  Icon(
+                                    Icons.arrow_drop_down_outlined,
+                                    size: 22,
+                                  )
+                                ],
+                              ),
+                            ));
+                },
+              ),
+            ),
+          ),
+
+          // fourth
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    color: MyColor.borderColor,
+                  ),
+                  borderRadius: BorderRadius.circular(22)),
+              child: MenuAnchor(
+                style: MenuStyle(
+                  // maximumSize: MaterialStateProperty.all(const Size(300, 400)),
+                  elevation: MaterialStateProperty.all(10),
+                ),
+                menuChildren: <Widget>[
+                  MenuItemButton(
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(Icons.delete_outline_outlined),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("Low to High")
+                      ],
+                    ),
+                    onPressed: () {},
+                  ),
+                  MenuItemButton(
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Icon(
+                          Icons.verified_user_outlined,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("High to Low")
+                      ],
+                    ),
+                    onPressed: () {},
+                  )
+                ],
+                builder: (BuildContext context, MenuController controller,
+                    Widget? child) {
+                  return TextButton(
+                      onPressed: () {
+                        if (controller.isOpen) {
+                          controller.close();
+                        } else {
+                          controller.open();
+                        }
+                      },
+                      child: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                          ? const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 25, right: 25, top: 9, bottom: 9),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('Highest Member'),
+                                  Icon(
+                                    Icons.arrow_drop_down_outlined,
+                                    size: 22,
+                                  )
+                                ],
+                              ),
+                            )
+                          : const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 10, right: 10, top: 9, bottom: 9),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('Highest Member'),
+                                  Icon(
+                                    Icons.arrow_drop_down_outlined,
+                                    size: 22,
+                                  )
+                                ],
+                              ),
+                            ));
+                },
+              ),
+            ),
+          ),
+
+          //fivth
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: Container(
+                decoration: BoxDecoration(
+                    color: MyColor.greyWidgetColor.withOpacity(0.20),
+                    border: Border.all(
+                      color: MyColor.borderColor,
+                    ),
+                    borderRadius: BorderRadius.circular(22)),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 25, right: 25, top: 9, bottom: 9),
+                  child: Center(
+                    child: MyTextWidget(
+                      content: "FILTER",
+                      myColor: MyColor.blackText,
+                    ),
+                  ),
+                )),
+          ),
+        ],
+      )
+    ],
+  );
+}
