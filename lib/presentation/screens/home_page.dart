@@ -7,9 +7,7 @@ import 'package:new_marketing_dash_board/presentation/screens/channel.dart.dart'
 import 'package:new_marketing_dash_board/presentation/widgets/myTextWidget.dart';
 import 'package:new_marketing_dash_board/constants/my_flutter_app_icons.dart';
 
-
 import 'package:new_marketing_dash_board/presentation/widgets/drawerHeader.dart';
-
 
 import 'hirring.dart';
 
@@ -24,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final bool _includeBaseDestinationsInMenu = false;
   final bool _fabInRail = true;
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   List<Widget> allPages = [
     const ChannelScreen(),
     const HirringScreen(),

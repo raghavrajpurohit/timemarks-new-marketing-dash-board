@@ -3,7 +3,6 @@ import 'package:new_marketing_dash_board/constants/colors.dart';
 import 'package:new_marketing_dash_board/constants/responsive.dart';
 import 'package:new_marketing_dash_board/presentation/widgets/myTextWidget.dart';
 
-
 class ChannelScreen extends StatefulWidget {
   const ChannelScreen({super.key});
 
@@ -131,11 +130,14 @@ class _ChannelScreenState extends State<ChannelScreen> {
                                     const SizedBox(
                                       width: 10,
                                     ),
-                                    MyTextWidget(
-                                      content: m["name"],
-                                      myColor: MyColor.blackText,
-                                      fontbold: FontWeight.bold,
-                                      fontSize: 14,
+                                    InkWell(
+                                      child: MyTextWidget(
+                                        content: m["name"],
+                                        myColor: MyColor.blackText,
+                                        fontbold: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                      onTap: () {},
                                     ),
                                   ],
                                 )),

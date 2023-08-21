@@ -14,4 +14,5 @@ class MyColor {
   static Color borderColor = const Color(0xffD4D5D7);
   static Color purpleTextColor = const Color(0xffE0B0FF);
   static Color greyWidgetColor = const Color(0xff707070);
+  static Color blueTextColor = const Color(0xff57A4EB);
 }

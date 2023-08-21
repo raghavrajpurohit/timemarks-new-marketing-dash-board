@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:new_marketing_dash_board/constants/responsive.dart';
-
 import 'package:new_marketing_dash_board/constants/colors.dart';
+import 'package:new_marketing_dash_board/constants/responsive.dart';
 import 'package:new_marketing_dash_board/presentation/widgets/myTextWidget.dart';
-
 
 class HirringScreen extends StatefulWidget {
   const HirringScreen({super.key});
@@ -25,7 +23,7 @@ class _HirringScreenState extends State<HirringScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MyTextWidget(
-                  content: "Hirring",
+                  content: "Hirring Forms",
                   myColor: MyColor.blackText,
                   fontSize: 20,
                   fontbold: FontWeight.bold,
@@ -45,7 +43,7 @@ class _HirringScreenState extends State<HirringScreen> {
                     child: TextField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Search Channel",
+                        hintText: "Search form",
                         prefixIcon: Icon(
                           Icons.search,
                           color: Colors.black38,
@@ -73,20 +71,9 @@ class _HirringScreenState extends State<HirringScreen> {
                           decoration: BoxDecoration(
                               border: Border.all(color: MyColor.borderColor),
                               borderRadius: BorderRadius.circular(8)),
-                          // child: DropdownButtonFormField(
-                          //   items: [
-                          //     for (String m in filterDropdownItems)
-                          //       DropdownMenuItem(
-                          //         child: Text(m),
-                          //       )
-                          //   ],
-                          //   onChanged: (value) {
-                          //     setState(() {
-                          //       value;
-                          //     });
-                          //   },
-                          //   value: filterDropdownItems[0],
-                          // ),
+                          child: ResponsiveD.d(context) == ResponsiveD.desktop
+                              ? _upperRowWeb(context)
+                              : mobileDropDown(),
                         ),
                       )
                     ],
@@ -106,27 +93,33 @@ class _HirringScreenState extends State<HirringScreen> {
                                     fontbold: FontWeight.bold)),
                             DataColumn(
                                 label: MyTextWidget(
-                                    content: "VERIFICATION",
+                                    content: "FORM STATUS",
                                     myColor: MyColor.greyText,
                                     fontbold: FontWeight.bold)),
                             DataColumn(
                                 label: MyTextWidget(
-                                    content: "TOTAL MEMBERS",
+                                    content: "CATEGORY",
                                     myColor: MyColor.greyText,
                                     fontbold: FontWeight.bold)),
                             DataColumn(
                                 label: MyTextWidget(
-                                    content: "INSTALLED PLUGIN",
+                                    content: "TOTAL APPLICANTS",
                                     myColor: MyColor.greyText,
                                     fontbold: FontWeight.bold)),
                             DataColumn(
                                 label: MyTextWidget(
-                                    content: "ADMIN",
+                                    content: "HIRED",
                                     myColor: MyColor.greyText,
                                     fontbold: FontWeight.bold)),
                             DataColumn(
                                 label: MyTextWidget(
-                              content: "TYPE",
+                              content: "PENDING",
+                              myColor: MyColor.greyText,
+                              fontbold: FontWeight.bold,
+                            )),
+                            DataColumn(
+                                label: MyTextWidget(
+                              content: "REJECTED",
                               myColor: MyColor.greyText,
                               fontbold: FontWeight.bold,
                             )),
@@ -134,25 +127,19 @@ class _HirringScreenState extends State<HirringScreen> {
                           rows: [
                             for (Map m in tabelList)
                               DataRow(cells: [
-                                DataCell(Row(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 20,
-                                      backgroundImage: NetworkImage(m["logo"]),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    MyTextWidget(
-                                      content: m["name"],
-                                      myColor: MyColor.blackText,
-                                      fontbold: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                  ],
+                                DataCell(InkWell(
+                                  child: MyTextWidget(
+                                    content: m["name"],
+                                    myColor: MyColor.blueTextColor,
+                                    fontbold: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                  onTap: () {
+                                    
+                                  },
                                 )),
                                 DataCell(
-                                  m["isVerified"]
+                                  m["isActive"]
                                       ? Container(
                                           alignment: Alignment.center,
                                           height: 25,
@@ -167,7 +154,7 @@ class _HirringScreenState extends State<HirringScreen> {
                                               color: const Color(0xff27AE60)
                                                   .withOpacity(0.1)),
                                           child: MyTextWidget(
-                                            content: "Verified",
+                                            content: "Active",
                                             myColor: const Color(0xff27AE60),
                                           ),
                                         )
@@ -185,61 +172,42 @@ class _HirringScreenState extends State<HirringScreen> {
                                               color: const Color(0xffA0A3BD)
                                                   .withOpacity(0.1)),
                                           child: MyTextWidget(
-                                              content: "Unverified",
+                                              content: "Closed",
                                               myColor: const Color(0xffA0A3BD)),
                                         ),
                                 ),
                                 DataCell(
                                   MyTextWidget(
-                                    content: m["totalMembers"],
-                                    myColor: MyColor.blackText,
+                                    content: m["category"],
+                                    myColor: MyColor.greyText,
                                     fontSize: 14,
                                   ),
                                 ),
                                 DataCell(
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      MyTextWidget(
-                                        content: m["intalledPlugin"],
-                                        myColor: MyColor.blackText,
-                                        fontSize: 14,
-                                      ),
-                                      MyTextWidget(
-                                        content:
-                                            "+${m["morePlugin"].toString()} more",
-                                        myColor: MyColor.greyText,
-                                        fontSize: 12,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                DataCell(
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      MyTextWidget(
-                                        content: m["admin"],
-                                        myColor: MyColor.blackText,
-                                        fontSize: 14,
-                                      ),
-                                      MyTextWidget(
-                                        content:
-                                            "+${m["moreAdmin"].toString()} more",
-                                        myColor: MyColor.greyText,
-                                        fontSize: 12,
-                                      ),
-                                    ],
+                                  MyTextWidget(
+                                    content: m["totalApplicants"].toString(),
+                                    myColor: MyColor.greyText,
+                                    fontSize: 14,
                                   ),
                                 ),
                                 DataCell(
                                   MyTextWidget(
-                                    content: m["type"],
-                                    myColor: MyColor.blackText,
+                                    content: m["hired"].toString(),
+                                    myColor: MyColor.greyText,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                DataCell(
+                                  MyTextWidget(
+                                    content: m["pending"].toString(),
+                                    myColor: MyColor.greyText,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                DataCell(
+                                  MyTextWidget(
+                                    content: m["rejected"].toString(),
+                                    myColor: MyColor.greyText,
                                     fontSize: 14,
                                   ),
                                 ),
@@ -255,199 +223,571 @@ class _HirringScreenState extends State<HirringScreen> {
 
 List<Map<String, dynamic>> tabelList = [
   {
-    "name": "Sarkari Job",
-    "isVerified": true,
-    "logo": "https://picsum.photos/210/300",
-    "totalMembers": "5,00,000",
-    "intalledPlugin": "e-Mitra & CSC",
-    "morePlugin": 5,
-    "admin": "Harphool",
-    "moreAdmin": 3,
-    "type": "Public"
+    "name": "e-Mitra hiring application",
+    "isActive": true,
+    "category": "e-Mitra",
+    "totalApplicants": "5,00,000",
+    "hired": 200000,
+    "pending": 5,
+    "rejected": 3,
   },
   {
-    "name": "Jigyasa Institute",
-    "isVerified": false,
-    "logo": "https://picsum.photos/220/300",
-    "totalMembers": "90,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 1,
-    "admin": "Ranu Meena",
-    "moreAdmin": 2,
-    "type": "Public"
+    "name": "Doctors",
+    "isActive": true,
+    "category": "Doctor",
+    "totalApplicants": "5,00,000",
+    "hired": 200000,
+    "pending": 5,
+    "rejected": 3,
   },
   {
-    "name": "Agriculture Education Hub",
-    "isVerified": true,
-    "logo": "https://picsum.photos/240/300",
-    "totalMembers": "90,500",
-    "intalledPlugin": "Promotion",
-    "morePlugin": 4,
-    "admin": "Lokesh",
-    "moreAdmin": 5,
-    "type": "Private"
+    "name": "Website developers",
+    "isActive": false,
+    "category": "Developer",
+    "totalApplicants": "5,00,000",
+    "hired": 200000,
+    "pending": 5,
+    "rejected": 3,
   },
   {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
+    "name": "Doubt solver hiring",
+    "isActive": true,
+    "category": "Teacher",
+    "totalApplicants": "5,00,000",
+    "hired": 200000,
+    "pending": 5,
+    "rejected": 3,
   },
   {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
+    "name": "IIT JEE Maths Teachers ",
+    "isActive": false,
+    "category": "Teacher",
+    "totalApplicants": "5,00,000",
+    "hired": 200000,
+    "pending": 5,
+    "rejected": 3,
   },
 ];
 
-List filterDropdownItems = [
-  "Filter",
-  "Verified",
-  "All Types",
-  "Highest Members"
-];
+Widget mobileDropDown() {
+  return Padding(
+    padding: const EdgeInsets.all(4.0),
+    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      Container(
+        decoration: BoxDecoration(
+            border: Border.all(
+              color: MyColor.borderColor,
+            ),
+            borderRadius: BorderRadius.circular(22)),
+        child: MenuAnchor(
+          style: MenuStyle(
+            // maximumSize: MaterialStateProperty.all(const Size(300, 400)),
+            elevation: MaterialStateProperty.all(10),
+          ),
+          menuChildren: <Widget>[
+            MenuItemButton(
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(Icons.delete_outline_outlined),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text("Delete")
+                ],
+              ),
+              onPressed: () {},
+            ),
+            MenuItemButton(
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(
+                    Icons.verified_user_outlined,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text("Verify")
+                ],
+              ),
+              onPressed: () {},
+            )
+          ],
+          builder:
+              (BuildContext context, MenuController controller, Widget? child) {
+            return TextButton(
+                onPressed: () {
+                  if (controller.isOpen) {
+                    controller.close();
+                  } else {
+                    controller.open();
+                  }
+                },
+                child: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                    ? const Padding(
+                        padding: EdgeInsets.only(
+                            left: 25, right: 25, top: 9, bottom: 9),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Bulk Action'),
+                            Icon(
+                              Icons.arrow_drop_down_outlined,
+                              size: 22,
+                            )
+                          ],
+                        ),
+                      )
+                    : const Padding(
+                        padding: EdgeInsets.only(
+                            left: 10, right: 10, top: 9, bottom: 9),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Bulk Action'),
+                            Icon(
+                              Icons.arrow_drop_down_outlined,
+                              size: 22,
+                            )
+                          ],
+                        ),
+                      ));
+          },
+        ),
+      ),
+      Container(
+        decoration: BoxDecoration(
+            color: MyColor.greyWidgetColor.withOpacity(0.20),
+            border: Border.all(
+              color: MyColor.borderColor,
+            ),
+            borderRadius: BorderRadius.circular(22)),
+        child: MenuAnchor(
+          style: MenuStyle(
+            // maximumSize: MaterialStateProperty.all(const Size(300, 400)),
+            elevation: MaterialStateProperty.all(10),
+          ),
+          menuChildren: <Widget>[
+            SubmenuButton(
+              menuChildren: [
+                MenuItemButton(
+                  child: const Text("Open"),
+                  onPressed: () {},
+                ),
+                MenuItemButton(
+                  child: const Text("Closed"),
+                  onPressed: () {},
+                ),
+              ],
+              child: const Text("Form Status"),
+            ),
+            SubmenuButton(
+              menuChildren: [
+                MenuItemButton(
+                  child: const Text("Categories 1"),
+                  onPressed: () {},
+                ),
+                MenuItemButton(
+                  child: const Text("Categories 2"),
+                  onPressed: () {},
+                ),
+              ],
+              child: const Text("All Categories"),
+            ),
+            SubmenuButton(
+              menuChildren: [
+                MenuItemButton(
+                  child: const Text("Type-1"),
+                  onPressed: () {},
+                ),
+                MenuItemButton(
+                  child: const Text("Type-2 "),
+                  onPressed: () {},
+                ),
+              ],
+              child: const Text("All Applicants"),
+            ),
+          ],
+          builder:
+              (BuildContext context, MenuController controller, Widget? child) {
+            return TextButton(
+                onPressed: () {
+                  if (controller.isOpen) {
+                    controller.close();
+                  } else {
+                    controller.open();
+                  }
+                },
+                child: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                    ? const Padding(
+                        padding: EdgeInsets.only(
+                            left: 25, right: 25, top: 9, bottom: 9),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('FILTER'),
+                            Icon(
+                              Icons.arrow_drop_down_outlined,
+                              size: 22,
+                            )
+                          ],
+                        ),
+                      )
+                    : const Padding(
+                        padding: EdgeInsets.only(
+                            left: 10, right: 10, top: 9, bottom: 9),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('FILTER'),
+                            Icon(
+                              Icons.arrow_drop_down_outlined,
+                              size: 22,
+                            )
+                          ],
+                        ),
+                      ));
+          },
+        ),
+      )
+    ]),
+  );
+}
 
-Widget filterDropDown() {
-  return DropdownButtonFormField(
-    items: [
-      for (String m in filterDropdownItems)
-        DropdownMenuItem(
-          child: Text(m),
-        )
+Widget _upperRowWeb(context) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      // FIRST
+      Padding(
+        padding: const EdgeInsets.all(4),
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border.all(
+                color: MyColor.borderColor,
+              ),
+              borderRadius: BorderRadius.circular(22)),
+          child: MenuAnchor(
+            style: MenuStyle(
+              // maximumSize: MaterialStateProperty.all(const Size(300, 400)),
+              elevation: MaterialStateProperty.all(10),
+            ),
+            menuChildren: <Widget>[
+              MenuItemButton(
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(Icons.delete_outline_outlined),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text("Delete")
+                  ],
+                ),
+                onPressed: () {},
+              ),
+              MenuItemButton(
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Icon(
+                      Icons.verified_user_outlined,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text("Verify")
+                  ],
+                ),
+                onPressed: () {},
+              )
+            ],
+            builder: (BuildContext context, MenuController controller,
+                Widget? child) {
+              return TextButton(
+                  onPressed: () {
+                    if (controller.isOpen) {
+                      controller.close();
+                    } else {
+                      controller.open();
+                    }
+                  },
+                  child: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                      ? const Padding(
+                          padding: EdgeInsets.only(
+                              left: 25, right: 25, top: 9, bottom: 9),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('Bulk Action'),
+                              Icon(
+                                Icons.arrow_drop_down_outlined,
+                                size: 22,
+                              )
+                            ],
+                          ),
+                        )
+                      : const Padding(
+                          padding: EdgeInsets.only(
+                              left: 10, right: 10, top: 9, bottom: 9),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('Bulk Action'),
+                              Icon(
+                                Icons.arrow_drop_down_outlined,
+                                size: 22,
+                              )
+                            ],
+                          ),
+                        ));
+            },
+          ),
+        ),
+      ),
+
+      // second
+      Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    color: MyColor.borderColor,
+                  ),
+                  borderRadius: BorderRadius.circular(22)),
+              child: MenuAnchor(
+                style: MenuStyle(
+                  // maximumSize: MaterialStateProperty.all(const Size(300, 400)),
+                  elevation: MaterialStateProperty.all(10),
+                ),
+                menuChildren: <Widget>[
+                  MenuItemButton(
+                    child: const Text("Active"),
+                    onPressed: () {},
+                  ),
+                  MenuItemButton(
+                    child: const Text("Closed"),
+                    onPressed: () {},
+                  )
+                ],
+                builder: (BuildContext context, MenuController controller,
+                    Widget? child) {
+                  return TextButton(
+                      onPressed: () {
+                        if (controller.isOpen) {
+                          controller.close();
+                        } else {
+                          controller.open();
+                        }
+                      },
+                      child: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                          ? const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 25, right: 25, top: 9, bottom: 9),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('Form Status'),
+                                  Icon(
+                                    Icons.arrow_drop_down_outlined,
+                                    size: 22,
+                                  )
+                                ],
+                              ),
+                            )
+                          : const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 10, right: 10, top: 9, bottom: 9),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('Form Status'),
+                                  Icon(
+                                    Icons.arrow_drop_down_outlined,
+                                    size: 22,
+                                  )
+                                ],
+                              ),
+                            ));
+                },
+              ),
+            ),
+          ),
+
+          //third
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    color: MyColor.borderColor,
+                  ),
+                  borderRadius: BorderRadius.circular(22)),
+              child: MenuAnchor(
+                style: MenuStyle(
+                  // maximumSize: MaterialStateProperty.all(const Size(300, 400)),
+                  elevation: MaterialStateProperty.all(10),
+                ),
+                menuChildren: <Widget>[
+                  MenuItemButton(
+                    child: const Text("Category 1"),
+                    onPressed: () {},
+                  ),
+                  MenuItemButton(
+                    child: const Text("Category- 2"),
+                    onPressed: () {},
+                  )
+                ],
+                builder: (BuildContext context, MenuController controller,
+                    Widget? child) {
+                  return TextButton(
+                      onPressed: () {
+                        if (controller.isOpen) {
+                          controller.close();
+                        } else {
+                          controller.open();
+                        }
+                      },
+                      child: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                          ? const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 25, right: 25, top: 9, bottom: 9),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('All Categories'),
+                                  Icon(
+                                    Icons.arrow_drop_down_outlined,
+                                    size: 22,
+                                  )
+                                ],
+                              ),
+                            )
+                          : const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 10, right: 10, top: 9, bottom: 9),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('All Categories'),
+                                  Icon(
+                                    Icons.arrow_drop_down_outlined,
+                                    size: 22,
+                                  )
+                                ],
+                              ),
+                            ));
+                },
+              ),
+            ),
+          ),
+
+          // fourth
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    color: MyColor.borderColor,
+                  ),
+                  borderRadius: BorderRadius.circular(22)),
+              child: MenuAnchor(
+                style: MenuStyle(
+                  // maximumSize: MaterialStateProperty.all(const Size(300, 400)),
+                  elevation: MaterialStateProperty.all(10),
+                ),
+                menuChildren: <Widget>[
+                  MenuItemButton(
+                    child: const Text("Item-1"),
+                    onPressed: () {},
+                  ),
+                  MenuItemButton(
+                    child: const Text("Item-2"),
+                    onPressed: () {},
+                  )
+                ],
+                builder: (BuildContext context, MenuController controller,
+                    Widget? child) {
+                  return TextButton(
+                      onPressed: () {
+                        if (controller.isOpen) {
+                          controller.close();
+                        } else {
+                          controller.open();
+                        }
+                      },
+                      child: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                          ? const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 25, right: 25, top: 9, bottom: 9),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('All Applicants'),
+                                  Icon(
+                                    Icons.arrow_drop_down_outlined,
+                                    size: 22,
+                                  )
+                                ],
+                              ),
+                            )
+                          : const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 10, right: 10, top: 9, bottom: 9),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text('All Applicants'),
+                                  Icon(
+                                    Icons.arrow_drop_down_outlined,
+                                    size: 22,
+                                  )
+                                ],
+                              ),
+                            ));
+                },
+              ),
+            ),
+          ),
+
+          //fivth
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: Container(
+                decoration: BoxDecoration(
+                    color: MyColor.greyWidgetColor.withOpacity(0.20),
+                    border: Border.all(
+                      color: MyColor.borderColor,
+                    ),
+                    borderRadius: BorderRadius.circular(22)),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 25, right: 25, top: 9, bottom: 9),
+                  child: Center(
+                    child: MyTextWidget(
+                      content: "FILTER",
+                      myColor: MyColor.blackText,
+                    ),
+                  ),
+                )),
+          ),
+        ],
+      )
     ],
-    onChanged: (value) {},
-    value: filterDropdownItems[0],
   );
 }
