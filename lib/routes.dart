@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
+import 'package:new_marketing_dash_board/presentation/screens/home_page.dart';
 
-import 'package:new_marketing_dash_board/presentation/screens/pages/home_page.dart';
+
 
 class MyRoutes {
   static routeFunction() {
