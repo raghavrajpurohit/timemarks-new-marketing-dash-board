@@ -1,13 +1,16 @@
 import 'package:adaptive_navigation/adaptive_navigation.dart';
 import 'package:flutter/material.dart';
-import 'package:new_marketing_dash_board/pages/Channel.dart.dart';
-import 'package:new_marketing_dash_board/responsive.dart';
-import 'package:new_marketing_dash_board/ui/my_flutter_app_icons.dart';
+import 'package:new_marketing_dash_board/constants/colors.dart';
+import 'package:new_marketing_dash_board/constants/responsive.dart';
 
-import 'package:new_marketing_dash_board/ui/colors.dart';
-import 'package:new_marketing_dash_board/ui/widgets/drawerHeader.dart';
+import 'package:new_marketing_dash_board/presentation/screens/channel.dart.dart';
+import 'package:new_marketing_dash_board/presentation/widgets/myTextWidget.dart';
+import 'package:new_marketing_dash_board/constants/my_flutter_app_icons.dart';
 
-import '../ui/widgets/myTextWidget.dart';
+
+import 'package:new_marketing_dash_board/presentation/widgets/drawerHeader.dart';
+
+
 import 'hirring.dart';
 
 class HomeScreen extends StatefulWidget {

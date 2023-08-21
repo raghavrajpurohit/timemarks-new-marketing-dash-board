@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_marketing_dash_board/ui/colors.dart';
-import 'package:new_marketing_dash_board/ui/widgets/myTextWidget.dart';
+import 'package:new_marketing_dash_board/constants/colors.dart';
+import 'package:new_marketing_dash_board/presentation/widgets/myTextWidget.dart';
 
 Widget myDrawerHeader(BuildContext) {
   return Container(

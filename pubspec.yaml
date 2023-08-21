@@ -39,6 +39,7 @@ dependencies:
   flutter_svg: ^2.0.7
   adaptive_navigation:
     path: ./adaptive_navigation
+  flutter_bloc: ^8.1.3
 
 dev_dependencies:
   flutter_test:
