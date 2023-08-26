@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:new_marketing_dash_board/constants/colors.dart';
 import 'package:new_marketing_dash_board/constants/responsive.dart';
+import 'package:new_marketing_dash_board/presentation/screens/hirring/hirring_form_applicants/hirring_forms_applicants.dart';
 import 'package:new_marketing_dash_board/presentation/widgets/myTextWidget.dart';
 
-class ChannelScreen extends StatefulWidget {
-  const ChannelScreen({super.key});
+class HirringScreen extends StatefulWidget {
+  const HirringScreen({super.key});
 
   @override
-  State<ChannelScreen> createState() => _ChannelScreenState();
+  State<HirringScreen> createState() => _HirringScreenState();
 }
 
-class _ChannelScreenState extends State<ChannelScreen> {
+class _HirringScreenState extends State<HirringScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,7 +25,7 @@ class _ChannelScreenState extends State<ChannelScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MyTextWidget(
-                  content: "Channel",
+                  content: "Hirring Forms",
                   myColor: MyColor.blackText,
                   fontSize: 20,
                   fontbold: FontWeight.bold,
@@ -43,7 +45,7 @@ class _ChannelScreenState extends State<ChannelScreen> {
                     child: TextField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Search Channel",
+                        hintText: "Search form",
                         prefixIcon: Icon(
                           Icons.search,
                           color: Colors.black38,
@@ -93,27 +95,33 @@ class _ChannelScreenState extends State<ChannelScreen> {
                                     fontbold: FontWeight.bold)),
                             DataColumn(
                                 label: MyTextWidget(
-                                    content: "VERIFICATION",
+                                    content: "FORM STATUS",
                                     myColor: MyColor.greyText,
                                     fontbold: FontWeight.bold)),
                             DataColumn(
                                 label: MyTextWidget(
-                                    content: "TOTAL MEMBERS",
+                                    content: "CATEGORY",
                                     myColor: MyColor.greyText,
                                     fontbold: FontWeight.bold)),
                             DataColumn(
                                 label: MyTextWidget(
-                                    content: "INSTALLED PLUGIN",
+                                    content: "TOTAL APPLICANTS",
                                     myColor: MyColor.greyText,
                                     fontbold: FontWeight.bold)),
                             DataColumn(
                                 label: MyTextWidget(
-                                    content: "ADMIN",
+                                    content: "HIRED",
                                     myColor: MyColor.greyText,
                                     fontbold: FontWeight.bold)),
                             DataColumn(
                                 label: MyTextWidget(
-                              content: "TYPE",
+                              content: "PENDING",
+                              myColor: MyColor.greyText,
+                              fontbold: FontWeight.bold,
+                            )),
+                            DataColumn(
+                                label: MyTextWidget(
+                              content: "REJECTED",
                               myColor: MyColor.greyText,
                               fontbold: FontWeight.bold,
                             )),
@@ -121,28 +129,20 @@ class _ChannelScreenState extends State<ChannelScreen> {
                           rows: [
                             for (Map m in tabelList)
                               DataRow(cells: [
-                                DataCell(Row(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 20,
-                                      backgroundImage: NetworkImage(m["logo"]),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    InkWell(
-                                      child: MyTextWidget(
-                                        content: m["name"],
-                                        myColor: MyColor.blackText,
-                                        fontbold: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                      onTap: () {},
-                                    ),
-                                  ],
+                                DataCell(InkWell(
+                                  child: MyTextWidget(
+                                    content: m["name"],
+                                    myColor: MyColor.blueTextColor,
+                                    fontbold: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                  onTap: () {
+                                    return context
+                                        .go(HirringFormApplicants.pageId);
+                                  },
                                 )),
                                 DataCell(
-                                  m["isVerified"]
+                                  m["isActive"]
                                       ? Container(
                                           alignment: Alignment.center,
                                           height: 25,
@@ -156,9 +156,9 @@ class _ChannelScreenState extends State<ChannelScreen> {
                                                   BorderRadius.circular(20),
                                               color: const Color(0xff27AE60)
                                                   .withOpacity(0.1)),
-                                          child: const MyTextWidget(
-                                            content: "Verified",
-                                            myColor: Color(0xff27AE60),
+                                          child: MyTextWidget(
+                                            content: "Active",
+                                            myColor: const Color(0xff27AE60),
                                           ),
                                         )
                                       : Container(
@@ -174,62 +174,43 @@ class _ChannelScreenState extends State<ChannelScreen> {
                                                   BorderRadius.circular(20),
                                               color: const Color(0xffA0A3BD)
                                                   .withOpacity(0.1)),
-                                          child: const MyTextWidget(
-                                              content: "Unverified",
-                                              myColor: Color(0xffA0A3BD)),
+                                          child: MyTextWidget(
+                                              content: "Closed",
+                                              myColor: const Color(0xffA0A3BD)),
                                         ),
                                 ),
                                 DataCell(
                                   MyTextWidget(
-                                    content: m["totalMembers"],
-                                    myColor: MyColor.blackText,
+                                    content: m["category"],
+                                    myColor: MyColor.greyText,
                                     fontSize: 14,
                                   ),
                                 ),
                                 DataCell(
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      MyTextWidget(
-                                        content: m["intalledPlugin"],
-                                        myColor: MyColor.blackText,
-                                        fontSize: 14,
-                                      ),
-                                      MyTextWidget(
-                                        content:
-                                            "+${m["morePlugin"].toString()} more",
-                                        myColor: MyColor.greyText,
-                                        fontSize: 12,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                DataCell(
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      MyTextWidget(
-                                        content: m["admin"],
-                                        myColor: MyColor.blackText,
-                                        fontSize: 14,
-                                      ),
-                                      MyTextWidget(
-                                        content:
-                                            "+${m["moreAdmin"].toString()} more",
-                                        myColor: MyColor.greyText,
-                                        fontSize: 12,
-                                      ),
-                                    ],
+                                  MyTextWidget(
+                                    content: m["totalApplicants"].toString(),
+                                    myColor: MyColor.greyText,
+                                    fontSize: 14,
                                   ),
                                 ),
                                 DataCell(
                                   MyTextWidget(
-                                    content: m["type"],
-                                    myColor: MyColor.blackText,
+                                    content: m["hired"].toString(),
+                                    myColor: MyColor.greyText,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                DataCell(
+                                  MyTextWidget(
+                                    content: m["pending"].toString(),
+                                    myColor: MyColor.greyText,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                DataCell(
+                                  MyTextWidget(
+                                    content: m["rejected"].toString(),
+                                    myColor: MyColor.greyText,
                                     fontSize: 14,
                                   ),
                                 ),
@@ -245,180 +226,49 @@ class _ChannelScreenState extends State<ChannelScreen> {
 
 List<Map<String, dynamic>> tabelList = [
   {
-    "name": "Sarkari Job",
-    "isVerified": true,
-    "logo": "https://picsum.photos/210/300",
-    "totalMembers": "5,00,000",
-    "intalledPlugin": "e-Mitra & CSC",
-    "morePlugin": 5,
-    "admin": "Harphool",
-    "moreAdmin": 3,
-    "type": "Public"
+    "name": "e-Mitra hiring application",
+    "isActive": true,
+    "category": "e-Mitra",
+    "totalApplicants": "5,00,000",
+    "hired": 200000,
+    "pending": 5,
+    "rejected": 3,
   },
   {
-    "name": "Jigyasa Institute",
-    "isVerified": false,
-    "logo": "https://picsum.photos/220/300",
-    "totalMembers": "90,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 1,
-    "admin": "Ranu Meena",
-    "moreAdmin": 2,
-    "type": "Public"
+    "name": "Doctors",
+    "isActive": true,
+    "category": "Doctor",
+    "totalApplicants": "5,00,000",
+    "hired": 200000,
+    "pending": 5,
+    "rejected": 3,
   },
   {
-    "name": "Agriculture Education Hub",
-    "isVerified": true,
-    "logo": "https://picsum.photos/240/300",
-    "totalMembers": "90,500",
-    "intalledPlugin": "Promotion",
-    "morePlugin": 4,
-    "admin": "Lokesh",
-    "moreAdmin": 5,
-    "type": "Private"
+    "name": "Website developers",
+    "isActive": false,
+    "category": "Developer",
+    "totalApplicants": "5,00,000",
+    "hired": 200000,
+    "pending": 5,
+    "rejected": 3,
   },
   {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
+    "name": "Doubt solver hiring",
+    "isActive": true,
+    "category": "Teacher",
+    "totalApplicants": "5,00,000",
+    "hired": 200000,
+    "pending": 5,
+    "rejected": 3,
   },
   {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
-  },
-  {
-    "name": "e-Mitra",
-    "isVerified": true,
-    "logo": "https://picsum.photos/250/300",
-    "totalMembers": "5,000",
-    "intalledPlugin": "Doctor",
-    "morePlugin": 5,
-    "admin": "Satish Sir",
-    "moreAdmin": 2,
-    "type": "Public"
+    "name": "IIT JEE Maths Teachers ",
+    "isActive": false,
+    "category": "Teacher",
+    "totalApplicants": "5,00,000",
+    "hired": 200000,
+    "pending": 5,
+    "rejected": 3,
   },
 ];
 
@@ -527,41 +377,41 @@ Widget mobileDropDown() {
             SubmenuButton(
               menuChildren: [
                 MenuItemButton(
-                  child: const Text("VERIFIED-1"),
+                  child: const Text("Open"),
                   onPressed: () {},
                 ),
                 MenuItemButton(
-                  child: const Text("VERIFIED-2"),
+                  child: const Text("Closed"),
                   onPressed: () {},
                 ),
               ],
-              child: const Text("VERIFIED"),
+              child: const Text("Form Status"),
             ),
             SubmenuButton(
               menuChildren: [
                 MenuItemButton(
-                  child: const Text("TYPE-1"),
+                  child: const Text("Categories 1"),
                   onPressed: () {},
                 ),
                 MenuItemButton(
-                  child: const Text("TYPE-2"),
+                  child: const Text("Categories 2"),
                   onPressed: () {},
                 ),
               ],
-              child: const Text("ALL TYPES"),
+              child: const Text("All Categories"),
             ),
             SubmenuButton(
               menuChildren: [
                 MenuItemButton(
-                  child: const Text("MEMBERS-1"),
+                  child: const Text("Type-1"),
                   onPressed: () {},
                 ),
                 MenuItemButton(
-                  child: const Text("MEMBERS-2 "),
+                  child: const Text("Type-2 "),
                   onPressed: () {},
                 ),
               ],
-              child: const Text("HIGHEST MEMBERS"),
+              child: const Text("All Applicants"),
             ),
           ],
           builder:
@@ -724,31 +574,11 @@ Widget _upperRowWeb(context) {
                 ),
                 menuChildren: <Widget>[
                   MenuItemButton(
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.delete_outline_outlined),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text("Item 1")
-                      ],
-                    ),
+                    child: const Text("Active"),
                     onPressed: () {},
                   ),
                   MenuItemButton(
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(
-                          Icons.verified_user_outlined,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text("Item 2")
-                      ],
-                    ),
+                    child: const Text("Closed"),
                     onPressed: () {},
                   )
                 ],
@@ -770,7 +600,7 @@ Widget _upperRowWeb(context) {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 // crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text('Verified'),
+                                  Text('Form Status'),
                                   Icon(
                                     Icons.arrow_drop_down_outlined,
                                     size: 22,
@@ -785,7 +615,7 @@ Widget _upperRowWeb(context) {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 // crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text('Verified'),
+                                  Text('Form Status'),
                                   Icon(
                                     Icons.arrow_drop_down_outlined,
                                     size: 22,
@@ -814,31 +644,11 @@ Widget _upperRowWeb(context) {
                 ),
                 menuChildren: <Widget>[
                   MenuItemButton(
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.delete_outline_outlined),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text("Type 1")
-                      ],
-                    ),
+                    child: const Text("Category 1"),
                     onPressed: () {},
                   ),
                   MenuItemButton(
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(
-                          Icons.verified_user_outlined,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text("Type 2")
-                      ],
-                    ),
+                    child: const Text("Category- 2"),
                     onPressed: () {},
                   )
                 ],
@@ -860,7 +670,7 @@ Widget _upperRowWeb(context) {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 // crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text('All Type'),
+                                  Text('All Categories'),
                                   Icon(
                                     Icons.arrow_drop_down_outlined,
                                     size: 22,
@@ -875,7 +685,7 @@ Widget _upperRowWeb(context) {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 // crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text('All Type'),
+                                  Text('All Categories'),
                                   Icon(
                                     Icons.arrow_drop_down_outlined,
                                     size: 22,
@@ -904,31 +714,11 @@ Widget _upperRowWeb(context) {
                 ),
                 menuChildren: <Widget>[
                   MenuItemButton(
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.delete_outline_outlined),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text("Low to High")
-                      ],
-                    ),
+                    child: const Text("Item-1"),
                     onPressed: () {},
                   ),
                   MenuItemButton(
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(
-                          Icons.verified_user_outlined,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text("High to Low")
-                      ],
-                    ),
+                    child: const Text("Item-2"),
                     onPressed: () {},
                   )
                 ],
@@ -950,7 +740,7 @@ Widget _upperRowWeb(context) {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 // crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text('Highest Member'),
+                                  Text('All Applicants'),
                                   Icon(
                                     Icons.arrow_drop_down_outlined,
                                     size: 22,
@@ -965,7 +755,7 @@ Widget _upperRowWeb(context) {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 // crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text('Highest Member'),
+                                  Text('All Applicants'),
                                   Icon(
                                     Icons.arrow_drop_down_outlined,
                                     size: 22,

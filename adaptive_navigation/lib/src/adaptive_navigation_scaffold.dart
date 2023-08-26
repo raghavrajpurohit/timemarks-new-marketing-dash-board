@@ -1,8 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // Copyright 2020, the Flutter project authors. Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:math' as math;
+
 import 'package:adaptive_breakpoints/adaptive_breakpoints.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -45,20 +47,24 @@ class AdaptiveNavigationScaffold extends StatelessWidget {
   const AdaptiveNavigationScaffold({
     Key? key,
     this.appBar,
+    this.drawerTextColor,
+    this.drawerColor,
+    this.drawerWidth,
     required this.body,
     this.floatingActionButton,
     this.floatingActionButtonLocation,
     this.floatingActionButtonAnimator,
     this.persistentFooterButtons,
     this.endDrawer,
-    this.bottomSheet,
+    this.selectedIndexIndicatorColor,
+    this.drawerScrimColor,
     this.backgroundColor,
+    this.bottomSheet,
     this.resizeToAvoidBottomInset,
     this.primary = true,
     this.drawerDragStartBehavior = DragStartBehavior.start,
     this.extendBody = false,
     this.extendBodyBehindAppBar = false,
-    this.drawerScrimColor,
     this.drawerEdgeDragWidth,
     this.drawerEnableOpenDragGesture = true,
     this.endDrawerEnableOpenDragGesture = true,
@@ -71,15 +77,18 @@ class AdaptiveNavigationScaffold extends StatelessWidget {
     this.fabInRail = true,
     this.includeBaseDestinationsInMenu = true,
     this.bottomNavigationOverflow = 5,
-    this.drawerColor,
-    this.drawerTextColor,
   }) : super(key: key);
 
   /// See [Scaffold.appBar].
   final PreferredSizeWidget? appBar;
+
   final Color? drawerTextColor;
 
+  final Color? selectedIndexIndicatorColor;
+
   final Color? drawerColor;
+
+  final double? drawerWidth;
 
   /// See [Scaffold.body].
   final Widget body;
@@ -354,11 +363,11 @@ class AdaptiveNavigationScaffold extends StatelessWidget {
   }
 
   /// drawer for web
-
   Widget _buildPermanentDrawerScaffold() {
     return Row(
       children: [
         Drawer(
+          width: drawerWidth,
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
           backgroundColor: drawerColor,
           child: Column(
@@ -367,13 +376,15 @@ class AdaptiveNavigationScaffold extends StatelessWidget {
               for (final destination in destinations)
                 Row(
                   children: [
-                    Container(
-                      height: 40,
-                      width: 5,
-                      color: destinations.indexOf(destination) == selectedIndex
-                          ? Colors.white
-                          : Colors.transparent,
-                    ),
+                    if (selectedIndexIndicatorColor != null)
+                      Container(
+                        height: 40,
+                        width: 5,
+                        color:
+                            destinations.indexOf(destination) == selectedIndex
+                                ? selectedIndexIndicatorColor
+                                : Colors.transparent,
+                      ),
                     Expanded(
                       child: ListTile(
                         leading: Icon(
