@@ -33,9 +33,15 @@ GoRouter routes = GoRouter(
       },
     ),
     GoRoute(
-      path: MyDialoges.pageId,
+      path: MyDialogesDetails.pageId,
       builder: (context, state) {
-        return const MyDialoges();
+        return const MyDialogesDetails();
+      },
+    ),
+    GoRoute(
+      path: MyDialogesDocuments.pageId,
+      builder: (context, state) {
+        return const MyDialogesDocuments();
       },
     ),
   ],

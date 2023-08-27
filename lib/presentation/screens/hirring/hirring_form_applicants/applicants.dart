@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:new_marketing_dash_board/constants/colors.dart';
 import 'package:new_marketing_dash_board/constants/responsive.dart';
-import 'package:new_marketing_dash_board/presentation/screens/hirring/hirring_form_applicants/hirring_forms_applicants.dart';
+
+import 'package:new_marketing_dash_board/presentation/widgets/dialoge.dart';
 import 'package:new_marketing_dash_board/presentation/widgets/myTextWidget.dart';
 
 class HirringApplicants extends StatefulWidget {
@@ -127,7 +128,10 @@ class _HirringApplicantsState extends State<HirringApplicants> {
                                       fontbold: FontWeight.bold,
                                       fontSize: 14,
                                     ),
-                                    onTap: () {},
+                                    onTap: () {
+                                      return context
+                                          .go(MyDialogesDetails.pageId);
+                                    },
                                   ),
                                 ],
                               )),
