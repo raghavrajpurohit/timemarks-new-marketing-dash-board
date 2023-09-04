@@ -38,11 +38,6 @@ GoRouter routes = GoRouter(
         return const MyDialogesDetails();
       },
     ),
-    GoRoute(
-      path: MyDialogesDocuments.pageId,
-      builder: (context, state) {
-        return const MyDialogesDocuments();
-      },
-    ),
+
   ],
 );

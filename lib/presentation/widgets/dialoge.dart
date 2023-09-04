@@ -13,6 +13,8 @@ class MyDialogesDetails extends StatefulWidget {
 }
 
 class _MyDialogesDetailsState extends State<MyDialogesDetails> {
+  PageController controller = PageController();
+  int _curr = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +32,11 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
               borderRadius: const BorderRadius.all(Radius.circular(10))),
           child: Column(
             children: [
-              Expanded(flex: 1, child: Container(child: row1(context))),
-              Expanded(flex: 6, child: Container(child: row2(context))),
-              Expanded(flex: 1, child: Container(child: row3())),
+              Expanded(flex: 1, child: Container(child: topRow(context))),
+              Expanded(
+                  flex: 6,
+                  child: Container(child: middleRow(context, controller))),
+              Expanded(flex: 1, child: Container(child: endRow())),
             ],
           ),
         ),
@@ -40,7 +44,7 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
     );
   }
 
-  row1(context) {
+  topRow(context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -92,7 +96,7 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
     );
   }
 
-  row2(context) {
+  middleRow(context, PageController controller) {
     return SizedBox(
       height: double.infinity,
       child: Row(
@@ -100,61 +104,26 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
         children: [
           Expanded(
               flex: !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 3 : 5,
-              child: container1(context)),
-          Expanded(flex: 8, child: container2(context)),
+              child: progressIndicatorContainer(context)),
+          Expanded(
+              flex: 8,
+              child: PageView(
+                scrollDirection: Axis.vertical,
+                // allowImplicitScrolling: true,
+                children: _getList(context),
+                controller: controller,
+                onPageChanged: (index) {
+                  setState(() {
+                    _curr = index;
+                  });
+                },
+              )),
         ],
       ),
     );
   }
 
-  row3() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border(
-                    top: BorderSide(color: MyColor.borderColor, width: 1.5))),
-            child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    const Expanded(child: SizedBox()),
-                    Row(
-                      children: [
-                        TextButton(
-                          onPressed: () {},
-                          child: MyTextWidget(
-                            content: "CANCEL",
-                            fontSize: 18,
-                            myColor: MyColor.greyWidgetColor,
-                            fontbold: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const MyTextWidget(
-                            content: "NEXT",
-                            fontSize: 18,
-                            myColor: Color(0xff3E92E0),
-                            fontbold: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )),
-          ),
-        ),
-      ],
-    );
-  }
-
-  container1(context) {
+  progressIndicatorContainer(context) {
     return Container(
       decoration: BoxDecoration(
           border: Border(
@@ -193,7 +162,15 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
     );
   }
 
-  container2(context) {
+  _getList(BuildContext ctx) {
+    final List<Widget> list = <Widget>[
+      detailsContainer(ctx),
+      documentsContainer(ctx)
+    ];
+    return list;
+  }
+
+  Widget detailsContainer(context) {
     return SizedBox(
       height: double.infinity,
       child: Padding(
@@ -205,7 +182,6 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
@@ -443,170 +419,8 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
       ),
     );
   }
-}
 
-class MyDialogesDocuments extends StatefulWidget {
-  static const String pageId = "/documents";
-  const MyDialogesDocuments({super.key});
-
-  @override
-  State<MyDialogesDocuments> createState() => _MyDialogesDocumentsState();
-}
-
-class _MyDialogesDocumentsState extends State<MyDialogesDocuments> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: MyColor.greyWidgetColor.withOpacity(0.3),
-      body: Center(
-        child: Container(
-          width: ResponsiveD.d(context) == ResponsiveD.desktop
-              ? 894
-              : ResponsiveD.d(context) == ResponsiveD.tablet
-                  ? 700
-                  : 380,
-          height: 572,
-          decoration: BoxDecoration(
-              color: MyColor.whiteContainer,
-              borderRadius: const BorderRadius.all(Radius.circular(10))),
-          child: Column(
-            children: [
-              Expanded(flex: 1, child: Container(child: row1(context))),
-              Expanded(flex: 6, child: Container(child: row2(context))),
-              Expanded(flex: 1, child: Container(child: row3())),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  row1(context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom:
-                        BorderSide(color: MyColor.borderColor, width: 1.5))),
-            child: const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: MyTextWidget(
-                content: "Application for e-Mitra",
-                fontSize: 20,
-                fontbold: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  row2(context) {
-    return SizedBox(
-      height: double.infinity,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-              flex: !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 3 : 5,
-              child: container1(context)),
-          Expanded(flex: 8, child: container2(context)),
-        ],
-      ),
-    );
-  }
-
-  row3() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border(
-                    top: BorderSide(color: MyColor.borderColor, width: 1.5))),
-            child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    const Expanded(child: SizedBox()),
-                    Row(
-                      children: [
-                        TextButton(
-                          onPressed: () {},
-                          child: MyTextWidget(
-                            content: "CANCEL",
-                            fontSize: 18,
-                            myColor: MyColor.greyWidgetColor,
-                            fontbold: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const MyTextWidget(
-                            content: "NEXT",
-                            fontSize: 18,
-                            myColor: Color(0xff3E92E0),
-                            fontbold: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )),
-          ),
-        ),
-      ],
-    );
-  }
-
-  container1(context) {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border(
-              right: BorderSide(color: MyColor.borderColor, width: 1.5))),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius:
-                        ResponsiveD.d(context) == ResponsiveD.desktop ? 20 : 15,
-                    backgroundImage:
-                        const NetworkImage("https://picsum.photos/300/300"),
-                  ),
-                  SizedBox(
-                    width:
-                        ResponsiveD.d(context) == ResponsiveD.desktop ? 10 : 5,
-                  ),
-                  const MyTextWidget(
-                    content: "RK Singh",
-                    fontSize: 14,
-                    fontbold: FontWeight.bold,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  container2(context) {
+  documentsContainer(context) {
     return SizedBox(
       height: double.infinity,
       child: Padding(
@@ -620,22 +434,22 @@ class _MyDialogesDocumentsState extends State<MyDialogesDocuments> {
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              insideContainer(context, "10th Class Marksheet"),
+              myContainer(context, "10th Class Marksheet"),
               SizedBox(
                 height:
                     !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 16 : 8,
               ),
-              insideContainer(context, "12th Class Marksheet"),
+              myContainer(context, "12th Class Marksheet"),
               SizedBox(
                 height:
                     !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 16 : 8,
               ),
-              insideContainer(context, "e-Mitra Certificate"),
+              myContainer(context, "e-Mitra Certificate"),
               SizedBox(
                 height:
                     !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 16 : 8,
               ),
-              insideContainer(context, "Aadhaar Card"),
+              myContainer(context, "Aadhaar Card"),
             ],
           ),
         ),
@@ -643,7 +457,7 @@ class _MyDialogesDocumentsState extends State<MyDialogesDocuments> {
     );
   }
 
-  insideContainer(context, String title) {
+  myContainer(context, String title) {
     return Row(
       children: [
         Expanded(
@@ -734,84 +548,8 @@ class _MyDialogesDocumentsState extends State<MyDialogesDocuments> {
       ],
     );
   }
-}
 
-class MyDialogesPermission extends StatefulWidget {
-  static const String pageId = "/permission";
-  const MyDialogesPermission({super.key});
-
-  @override
-  State<MyDialogesPermission> createState() => _MyDialogesPermissionState();
-}
-
-class _MyDialogesPermissionState extends State<MyDialogesPermission> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: MyColor.greyWidgetColor.withOpacity(0.3),
-      body: Center(
-        child: Container(
-          width: ResponsiveD.d(context) == ResponsiveD.desktop
-              ? 894
-              : ResponsiveD.d(context) == ResponsiveD.tablet
-                  ? 700
-                  : 380,
-          height: 572,
-          decoration: BoxDecoration(
-              color: MyColor.whiteContainer,
-              borderRadius: const BorderRadius.all(Radius.circular(10))),
-          child: Column(
-            children: [
-              Expanded(flex: 1, child: Container(child: row1(context))),
-              Expanded(flex: 6, child: Container(child: row2(context))),
-              Expanded(flex: 1, child: Container(child: row3())),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  row1(context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom:
-                        BorderSide(color: MyColor.borderColor, width: 1.5))),
-            child: const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: MyTextWidget(
-                content: "Application for e-Mitra",
-                fontSize: 20,
-                fontbold: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  row2(context) {
-    return SizedBox(
-      height: double.infinity,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-              flex: !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 3 : 5,
-              child: container1(context)),
-          Expanded(flex: 8, child: container2(context)),
-        ],
-      ),
-    );
-  }
-
-  row3() {
+  endRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -840,7 +578,11 @@ class _MyDialogesPermissionState extends State<MyDialogesPermission> {
                           width: 10,
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            controller.animateToPage(1,
+                                duration: const Duration(milliseconds: 1000),
+                                curve: Curves.ease);
+                          },
                           child: const MyTextWidget(
                             content: "NEXT",
                             fontSize: 18,
@@ -852,174 +594,6 @@ class _MyDialogesPermissionState extends State<MyDialogesPermission> {
                     ),
                   ],
                 )),
-          ),
-        ),
-      ],
-    );
-  }
-
-  container1(context) {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border(
-              right: BorderSide(color: MyColor.borderColor, width: 1.5))),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius:
-                        ResponsiveD.d(context) == ResponsiveD.desktop ? 20 : 15,
-                    backgroundImage:
-                        const NetworkImage("https://picsum.photos/300/300"),
-                  ),
-                  SizedBox(
-                    width:
-                        ResponsiveD.d(context) == ResponsiveD.desktop ? 10 : 5,
-                  ),
-                  const MyTextWidget(
-                    content: "RK Singh",
-                    fontSize: 14,
-                    fontbold: FontWeight.bold,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  container2(context) {
-    return SizedBox(
-      height: double.infinity,
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 16 : 8,
-          right: !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 16 : 8,
-          top: 16,
-        ),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              insideContainer(context, "10th Class Marksheet"),
-              SizedBox(
-                height:
-                    !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 16 : 8,
-              ),
-              insideContainer(context, "12th Class Marksheet"),
-              SizedBox(
-                height:
-                    !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 16 : 8,
-              ),
-              insideContainer(context, "e-Mitra Certificate"),
-              SizedBox(
-                height:
-                    !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 16 : 8,
-              ),
-              insideContainer(context, "Aadhaar Card"),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  insideContainer(context, String title) {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border.all(color: MyColor.borderColor, width: 1.5),
-                borderRadius: BorderRadius.circular(10)),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MyTextWidget(
-                      content: title,
-                      fontSize: 20,
-                      fontbold: FontWeight.bold,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Wrap(
-                      runSpacing: 10,
-                      spacing: 15,
-                      children: [
-                        FilledButton.tonal(
-                          onPressed: () {},
-                          style: ButtonStyle(
-                            side: MaterialStateProperty.all(BorderSide(
-                                color: MyColor.blackText.withOpacity(0.30),
-                                width: 2)),
-                            backgroundColor: MaterialStateProperty.all(
-                                MyColor.whiteContainer),
-                          ),
-                          child: MyTextWidget(
-                            content: "View File",
-                            myColor: MyColor.greyText,
-                          ),
-                        ),
-                        SizedBox(
-                          width: !(ResponsiveD.d(context) == ResponsiveD.mobile)
-                              ? 10
-                              : 20,
-                        ),
-                        FilledButton.tonal(
-                          onPressed: () {},
-                          style: ButtonStyle(
-                            side: MaterialStateProperty.all(BorderSide(
-                                color: MyColor.blackText.withOpacity(0.30),
-                                width: 2)),
-                            backgroundColor: MaterialStateProperty.all(
-                                MyColor.whiteContainer),
-                          ),
-                          child: MyTextWidget(
-                            content: "Download",
-                            myColor: MyColor.greyText,
-                          ),
-                        ),
-                        SizedBox(
-                          width: !(ResponsiveD.d(context) == ResponsiveD.mobile)
-                              ? 10
-                              : 20, //jugaad
-                        ),
-                        FilledButton.tonal(
-                          onPressed: () {},
-                          style: ButtonStyle(
-                            side: MaterialStateProperty.all(BorderSide(
-                                color: MyColor.blackText.withOpacity(0.30),
-                                width: 2)),
-                            backgroundColor: MaterialStateProperty.all(
-                                MyColor.whiteContainer),
-                          ),
-                          child: MyTextWidget(
-                            content: "Mark as Issue",
-                            myColor: MyColor.greyText,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: !(ResponsiveD.d(context) == ResponsiveD.mobile)
-                          ? 30
-                          : 10,
-                    ),
-                  ]),
-            ),
           ),
         ),
       ],
