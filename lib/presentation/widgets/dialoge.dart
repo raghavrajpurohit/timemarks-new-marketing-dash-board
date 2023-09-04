@@ -13,7 +13,7 @@ class MyDialogesDetails extends StatefulWidget {
 }
 
 class _MyDialogesDetailsState extends State<MyDialogesDetails> {
-  PageController controller = PageController();
+  PageController controller = PageController(initialPage: 2);
   int _curr = 0;
   @override
   Widget build(BuildContext context) {
@@ -109,14 +109,12 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
               flex: 8,
               child: PageView(
                 scrollDirection: Axis.vertical,
-                // allowImplicitScrolling: true,
-                children: _getList(context),
+                physics: const NeverScrollableScrollPhysics(),
                 controller: controller,
                 onPageChanged: (index) {
-                  setState(() {
-                    _curr = index;
-                  });
+                  _curr = index;
                 },
+                children: _getList(context),
               )),
         ],
       ),
@@ -162,13 +160,11 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
     );
   }
 
-  _getList(BuildContext ctx) {
-    final List<Widget> list = <Widget>[
-      detailsContainer(ctx),
-      documentsContainer(ctx)
-    ];
-    return list;
-  }
+  List<Widget> _getList(BuildContext ctx) => <Widget>[
+        detailsContainer(ctx),
+        documentsContainer(ctx),
+        permissionContainer(ctx)
+      ];
 
   Widget detailsContainer(context) {
     return SizedBox(
@@ -420,7 +416,7 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
     );
   }
 
-  documentsContainer(context) {
+  Widget documentsContainer(context) {
     return SizedBox(
       height: double.infinity,
       child: Padding(
@@ -457,7 +453,7 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
     );
   }
 
-  myContainer(context, String title) {
+  Widget myContainer(context, String title) {
     return Row(
       children: [
         Expanded(
@@ -549,6 +545,190 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
     );
   }
 
+  Widget permissionContainer(context) {
+    return SizedBox(
+      height: double.infinity,
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 16 : 8,
+          right: !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 16 : 8,
+          top: 16,
+        ),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const MyTextWidget(
+                content: "e-Mitra Permission for",
+                fontSize: 14,
+                fontbold: FontWeight.bold,
+              ),
+              const SizedBox(
+                height: 6,
+              ),
+              const Wrap(
+                runSpacing: 5,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                children: [],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const MyTextWidget(
+                content: "Education",
+                fontSize: 20,
+                fontbold: FontWeight.bold,
+              ),
+              const SizedBox(
+                height: 6,
+              ),
+              Wrap(
+                runSpacing: 5,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                children: [
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MyTextWidget(
+                        content: "Bachelor of Engineering",
+                        fontSize: 14,
+                      ),
+                      SizedBox(height: 3),
+                      MyTextWidget(
+                        content: "IIT Bombay  (2011 - 2015)",
+                        fontbold: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                        ? 200
+                        : 100,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MyTextWidget(
+                        content: "Bachelor of Engineering",
+                        fontSize: 14,
+                        myColor: MyColor.greyText,
+                      ),
+                      const SizedBox(height: 3),
+                      const MyTextWidget(
+                        content: "IIT Bombay  (2011 - 2015)",
+                        fontbold: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const MyTextWidget(
+                content: "Achievements",
+                fontSize: 20,
+                fontbold: FontWeight.bold,
+              ),
+              const SizedBox(
+                height: 6,
+              ),
+              Wrap(
+                runSpacing: 5,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MyTextWidget(
+                        content: "Best Player of the Match",
+                        fontSize: 14,
+                        myColor: MyColor.greyText,
+                      ),
+                      const SizedBox(height: 3),
+                      const MyTextWidget(
+                        content: "Rajasthan Olympics  (2011 - 2015))",
+                        fontbold: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                        ? 200
+                        : 100,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const MyTextWidget(
+                content: "Hobbies",
+                fontSize: 20,
+                fontbold: FontWeight.bold,
+              ),
+              const SizedBox(
+                height: 6,
+              ),
+              Wrap(
+                runSpacing: 10,
+                children: [
+                  FilledButton.tonal(
+                    onPressed: null,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          MyColor.greyWidgetColor.withOpacity(0.2)),
+                    ),
+                    child: const MyTextWidget(
+                      content: "Books Reading",
+                      fontbold: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    width: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                        ? 10
+                        : 20,
+                  ),
+                  FilledButton.tonal(
+                    onPressed: null,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          MyColor.greyWidgetColor.withOpacity(0.2)),
+                    ),
+                    child: const MyTextWidget(
+                      content: "Cricket",
+                      fontbold: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    width: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                        ? 10
+                        : 20, //jugaad
+                  ),
+                  FilledButton.tonal(
+                    onPressed: null,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          MyColor.greyWidgetColor.withOpacity(0.2)),
+                    ),
+                    child: const MyTextWidget(
+                      content: "Programming",
+                      fontbold: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   endRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -579,9 +759,11 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
                         ),
                         TextButton(
                           onPressed: () {
-                            controller.animateToPage(1,
-                                duration: const Duration(milliseconds: 1000),
-                                curve: Curves.ease);
+                            if (_curr < _getList(context).length) {
+                              controller.animateToPage(_curr + 1,
+                                  duration: const Duration(milliseconds: 1000),
+                                  curve: Curves.ease);
+                            }
                           },
                           child: const MyTextWidget(
                             content: "NEXT",
