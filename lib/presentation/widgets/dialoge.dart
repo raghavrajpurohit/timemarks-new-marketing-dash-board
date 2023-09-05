@@ -545,6 +545,8 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
     );
   }
 
+  int? channelStatus;
+
   Widget permissionContainer(context) {
     return SizedBox(
       height: double.infinity,
@@ -554,176 +556,61 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
           right: !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 16 : 8,
           top: 16,
         ),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const MyTextWidget(
-                content: "e-Mitra Permission for",
-                fontSize: 14,
-                fontbold: FontWeight.bold,
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-              const Wrap(
-                runSpacing: 5,
-                crossAxisAlignment: WrapCrossAlignment.start,
-                children: [],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              const MyTextWidget(
-                content: "Education",
-                fontSize: 20,
-                fontbold: FontWeight.bold,
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-              Wrap(
-                runSpacing: 5,
-                crossAxisAlignment: WrapCrossAlignment.start,
-                children: [
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      MyTextWidget(
-                        content: "Bachelor of Engineering",
-                        fontSize: 14,
-                      ),
-                      SizedBox(height: 3),
-                      MyTextWidget(
-                        content: "IIT Bombay  (2011 - 2015)",
-                        fontbold: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: !(ResponsiveD.d(context) == ResponsiveD.mobile)
-                        ? 200
-                        : 100,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      MyTextWidget(
-                        content: "Bachelor of Engineering",
-                        fontSize: 14,
-                        myColor: MyColor.greyText,
-                      ),
-                      const SizedBox(height: 3),
-                      const MyTextWidget(
-                        content: "IIT Bombay  (2011 - 2015)",
-                        fontbold: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              const MyTextWidget(
-                content: "Achievements",
-                fontSize: 20,
-                fontbold: FontWeight.bold,
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-              Wrap(
-                runSpacing: 5,
-                crossAxisAlignment: WrapCrossAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      MyTextWidget(
-                        content: "Best Player of the Match",
-                        fontSize: 14,
-                        myColor: MyColor.greyText,
-                      ),
-                      const SizedBox(height: 3),
-                      const MyTextWidget(
-                        content: "Rajasthan Olympics  (2011 - 2015))",
-                        fontbold: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: !(ResponsiveD.d(context) == ResponsiveD.mobile)
-                        ? 200
-                        : 100,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              const MyTextWidget(
-                content: "Hobbies",
-                fontSize: 20,
-                fontbold: FontWeight.bold,
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-              Wrap(
-                runSpacing: 10,
-                children: [
-                  FilledButton.tonal(
-                    onPressed: null,
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          MyColor.greyWidgetColor.withOpacity(0.2)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const MyTextWidget(
+              content: "e-Mitra Permission for",
+              fontSize: 14,
+              fontbold: FontWeight.bold,
+            ),
+            const SizedBox(
+              height: 6,
+            ),
+            Wrap(
+              spacing:
+                  ResponsiveD.d(context) == ResponsiveD.desktop ? 200 : 100,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Radio<int>(
+                      onChanged: (value) {
+                        channelStatus = value;
+                        setState(() {});
+                      },
+                      value: 1,
+                      groupValue: channelStatus,
                     ),
-                    child: const MyTextWidget(
-                      content: "Books Reading",
-                      fontbold: FontWeight.bold,
+                    const MyTextWidget(
+                      content: "All Channels",
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Radio<int>(
+                      onChanged: (value) {
+                        channelStatus = value;
+                        setState(() {});
+                      },
+                      value: 2,
+                      groupValue: channelStatus,
                     ),
-                  ),
-                  SizedBox(
-                    width: !(ResponsiveD.d(context) == ResponsiveD.mobile)
-                        ? 10
-                        : 20,
-                  ),
-                  FilledButton.tonal(
-                    onPressed: null,
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          MyColor.greyWidgetColor.withOpacity(0.2)),
-                    ),
-                    child: const MyTextWidget(
-                      content: "Cricket",
-                      fontbold: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    width: !(ResponsiveD.d(context) == ResponsiveD.mobile)
-                        ? 10
-                        : 20, //jugaad
-                  ),
-                  FilledButton.tonal(
-                    onPressed: null,
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          MyColor.greyWidgetColor.withOpacity(0.2)),
-                    ),
-                    child: const MyTextWidget(
-                      content: "Programming",
-                      fontbold: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
+                    const MyTextWidget(
+                      content: "Specific Channels",
+                    )
+                  ],
+                ),
+              ],
+            ),
+            channelStatus == 1 ? allChannelsWidget() : specificChannels(),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
         ),
       ),
     );
@@ -779,6 +666,62 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
           ),
         ),
       ],
+    );
+  }
+
+  allChannelsWidget() {
+    return const SizedBox();
+  }
+
+  specificChannels() {
+    return Expanded(
+      child: SizedBox(
+        width: double.infinity,
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border.all(color: MyColor.borderColor),
+              borderRadius: BorderRadius.circular(5)),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Column(children: [
+              ElevatedButton(
+                style: ButtonStyle(elevation: MaterialStateProperty.all(1)),
+                child: const MyTextWidget(content: "Choose Channel"),
+                onPressed: () {},
+              ),
+              const Divider(),
+              Padding(
+                padding: EdgeInsets.only(
+                    right: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                        ? 26
+                        : 0,
+                    left: !(ResponsiveD.d(context) == ResponsiveD.mobile)
+                        ? 26
+                        : 0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        MyTextWidget(
+                          fontSize: 12,
+                          content: "SELECTED CHANNELS (9)",
+                          myColor: MyColor.greyText,
+                        ),
+                        MyTextWidget(
+                          fontSize: 12,
+                          content: "ACTION",
+                          myColor: MyColor.greyText,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ]),
+          ),
+        ),
+      ),
     );
   }
 }
