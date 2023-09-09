@@ -1,10 +1,7 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:new_marketing_dash_board/constants/colors.dart';
 import 'package:new_marketing_dash_board/constants/responsive.dart';
-
 import 'package:new_marketing_dash_board/presentation/widgets/dialoge.dart';
 import 'package:new_marketing_dash_board/presentation/widgets/myTextWidget.dart';
 
@@ -25,18 +22,19 @@ class _HirringApplicantsState extends State<HirringApplicants> {
             flex: 1,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 MyTextWidget(
                   content: "Forms Applicants",
                   myColor: MyColor.blackText,
-                  fontSize: 20,
+                  fontSize:
+                      !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 20 : 17,
                   fontbold: FontWeight.bold,
                 ),
                 Container(
                   height: 35,
                   width: ResponsiveD.d(context) == ResponsiveD.mobile
-                      ? 200
+                      ? 180
                       : ResponsiveD.d(context) == ResponsiveD.tablet
                           ? 250
                           : 300,
@@ -86,108 +84,112 @@ class _HirringApplicantsState extends State<HirringApplicants> {
                   Expanded(
                       child: SizedBox(
                     width: double.infinity,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: DataTable(
-                        showCheckboxColumn: true,
-                        columns: [
-                          DataColumn(
-                              label: MyTextWidget(
-                                  content: "APPLICANT NAME",
-                                  myColor: MyColor.greyText,
-                                  fontbold: FontWeight.bold)),
-                          DataColumn(
-                              label: MyTextWidget(
-                            content: "STATUS",
-                            myColor: MyColor.greyText,
-                            fontbold: FontWeight.bold,
-                          )),
-                          DataColumn(
-                              label: MyTextWidget(
-                            content: "APPLY DATE",
-                            myColor: MyColor.greyText,
-                            fontbold: FontWeight.bold,
-                          )),
-                        ],
-                        rows: [
-                          for (Map m in tabelList)
-                            DataRow(cells: [
-                              DataCell(Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 20,
-                                    backgroundImage: NetworkImage(m["logo"]),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  InkWell(
-                                    child: MyTextWidget(
-                                      content: m["name"],
-                                      myColor: MyColor.blackText,
-                                      fontbold: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                    onTap: () {
-                                      return context
-                                          .go(MyDialogesDetails.pageId);
-                                    },
-                                  ),
-                                ],
-                              )),
-                              DataCell(
-                                m["isActive"]
-                                    ? Container(
-                                        alignment: Alignment.center,
-                                        height: 25,
-                                        width: 80,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                              width: 1,
-                                              color: Colors.black12,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: const Color(0xff27AE60)
-                                                .withOpacity(0.1)),
-                                        child: const MyTextWidget(
-                                          content: "Active",
-                                          myColor: Color(0xff27AE60),
-                                        ),
-                                      )
-                                    : Container(
-                                        alignment: Alignment.center,
-                                        height: 25,
-                                        width: 80,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                              width: 1,
-                                              color: Colors.black12,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: const Color(0xffA0A3BD)
-                                                .withOpacity(0.1)),
-                                        child: const MyTextWidget(
-                                            content: "Closed",
-                                            myColor: Color(0xffA0A3BD)),
-                                      ),
-                              ),
-                              DataCell(
-                                MyTextWidget(
-                                  content: m["category"],
-                                  myColor: MyColor.greyText,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ])
-                        ],
-                      ),
-                    ),
+                    child: applicantDataTable(context),
                   ))
                 ]),
               ))
         ]));
+  }
+
+  SingleChildScrollView applicantDataTable(BuildContext context) {
+    var singleChildScrollView = SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: DataTable(
+        showCheckboxColumn: true,
+        columns: [
+          DataColumn(
+              label: MyTextWidget(
+                  content: "APPLICANT NAME",
+                  myColor: MyColor.greyText,
+                  fontbold: FontWeight.bold)),
+          DataColumn(
+              label: MyTextWidget(
+            content: "STATUS",
+            myColor: MyColor.greyText,
+            fontbold: FontWeight.bold,
+          )),
+          DataColumn(
+              label: MyTextWidget(
+            content: "APPLY DATE",
+            myColor: MyColor.greyText,
+            fontbold: FontWeight.bold,
+          )),
+        ],
+        rows: [
+          for (Map m in tabelList)
+            DataRow(cells: [
+              DataCell(Row(
+                children: [
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundImage: NetworkImage(m["logo"]),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                    child: MyTextWidget(
+                      content: m["name"],
+                      myColor: MyColor.blackText,
+                      fontbold: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                    onTap: () {
+                      return context.go(MyDialogesDetails.pageId);
+                    },
+                  ),
+                ],
+              )),
+              DataCell(
+                m["isActive"]
+                    ? Container(
+                        alignment: Alignment.center,
+                        height: 25,
+                        width: 80,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.black12,
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color(0xff27AE60).withOpacity(0.1)),
+                        child: const MyTextWidget(
+                          content: "Active",
+                          myColor: Color(0xff27AE60),
+                        ),
+                      )
+                    : Container(
+                        alignment: Alignment.center,
+                        height: 25,
+                        width: 80,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.black12,
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color(0xffA0A3BD).withOpacity(0.1)),
+                        child: const MyTextWidget(
+                            content: "Closed", myColor: Color(0xffA0A3BD)),
+                      ),
+              ),
+              DataCell(
+                MyTextWidget(
+                  content: m["category"],
+                  myColor: MyColor.greyText,
+                  fontSize: 14,
+                ),
+              ),
+            ])
+        ],
+      ),
+    );
+    return ResponsiveD.d(context) == ResponsiveD.mobile
+        ? SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: singleChildScrollView,
+          )
+        : singleChildScrollView;
   }
 }
 

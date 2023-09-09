@@ -12,7 +12,7 @@ class MyDialogesDetails extends StatefulWidget {
 }
 
 class _MyDialogesDetailsState extends State<MyDialogesDetails> {
-  PageController controller = PageController(initialPage: 3);
+  PageController controller = PageController(initialPage: 0);
   int _curr = 0;
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const MyTextWidget(
-                    content: "Application for e-Mitra",
+                    content: "Application For e-Mitra",
                     fontSize: 20,
                     fontbold: FontWeight.bold,
                   ),
@@ -186,7 +186,10 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
               height: 8,
             ),
             Wrap(
-              spacing: ResponsiveD.d(context) == ResponsiveD.desktop ? 20 : 10,
+              runSpacing:
+                  !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 20 : 10,
+              spacing:
+                  !(ResponsiveD.d(context) == ResponsiveD.mobile) ? 20 : 200,
               crossAxisAlignment: WrapCrossAlignment.start,
               children: [
                 FilledButton.tonal(
@@ -211,7 +214,7 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
                   ),
                   child: MyTextWidget(
                     content: "Pending",
-                    myColor: MyColor.greyText,
+                    myColor: MyColor.whiteTextColor,
                   ),
                 ),
                 FilledButton.tonal(
@@ -678,7 +681,8 @@ class _MyDialogesDetailsState extends State<MyDialogesDetails> {
                 ),
               ],
             ),
-            channelStatus == 1 ? allChannelsWidget() : specificChannels(),
+            if (channelStatus != null)
+              channelStatus == 1 ? allChannelsWidget() : specificChannels(),
             const SizedBox(
               height: 10,
             ),
