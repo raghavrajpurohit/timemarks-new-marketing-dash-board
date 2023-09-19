@@ -4,7 +4,7 @@ import 'package:new_marketing_dash_board/constants/colors.dart';
 import 'package:new_marketing_dash_board/constants/responsive.dart';
 import 'package:new_marketing_dash_board/data/network_helper/html_js.dart';
 
-import 'package:new_marketing_dash_board/presentation/screens/channel.dart.dart';
+import 'package:new_marketing_dash_board/presentation/screens/channel/channel.dart.dart';
 import 'package:new_marketing_dash_board/presentation/widgets/myTextWidget.dart';
 import 'package:new_marketing_dash_board/constants/my_flutter_app_icons.dart';
 

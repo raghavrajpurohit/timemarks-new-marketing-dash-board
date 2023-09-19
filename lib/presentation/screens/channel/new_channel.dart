@@ -5,55 +5,51 @@ import 'package:new_marketing_dash_board/constants/responsive.dart';
 import 'package:new_marketing_dash_board/data/network_helper/html_js.dart';
 
 import 'package:new_marketing_dash_board/presentation/screens/channel/channel.dart.dart';
-import 'package:new_marketing_dash_board/presentation/screens/hirring/hirring.dart';
-import 'package:new_marketing_dash_board/presentation/screens/hirring/hirring_form_applicants/applicants.dart';
-import 'package:new_marketing_dash_board/presentation/screens/hirring/hirring_form_applicants/settings.dart';
 import 'package:new_marketing_dash_board/presentation/widgets/myTextWidget.dart';
 import 'package:new_marketing_dash_board/constants/my_flutter_app_icons.dart';
 
 import 'package:new_marketing_dash_board/presentation/widgets/drawerHeader.dart';
 
-class HirringFormApplicants extends StatefulWidget {
-  static const String pageId = "/hirring";
-  const HirringFormApplicants({super.key, this.initialIndex});
+class AddChannel extends StatefulWidget {
+  static const String pageId = "/addchannel";
+  const AddChannel({super.key, this.initialIndex});
   final int? initialIndex;
+
   @override
-  State<HirringFormApplicants> createState() => _HirringFormApplicantsState();
+  State<AddChannel> createState() => _AddChannelState();
 }
 
-class _HirringFormApplicantsState extends State<HirringFormApplicants> {
+class _AddChannelState extends State<AddChannel> {
   final bool _includeBaseDestinationsInMenu = false;
   final bool _fabInRail = true;
-  int _selectedIndex = 1;
+  late int _selectedIndex;
   List<Widget> allPages = [
-    const HirringApplicants(),
-    const HirringSettings(),
+    const AddNewChannel(),
   ];
+
   @override
   void initState() {
-    super.initState();
     _selectedIndex = widget.initialIndex ?? 0;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return AdaptiveNavigationScaffold(
-      drawerWidth: 250,
-      drawerTextColor: MyColor.blackText,
-      drawerColor: MyColor.whiteContainer,
+      drawerTextColor: MyColor.whiteTextColor,
+      drawerColor: MyColor.drawerColor,
       onDestinationSelected: (value) {
-        _selectedIndex = value;
         _selectedIndex = value;
         WebNavigation.updateCurrentWebPathQueryParm(
           {"initialIndex": _selectedIndex.toString()},
         );
         setState(() {});
       },
-      drawerHeader: myDrawerHeaderHirringFormsApplications(context),
+      drawerHeader: myDrawerHeader(context),
       destinations: _allDestinations,
       selectedIndex: _selectedIndex,
-      selectedIndexIndicatorColor: Colors.black,
       includeBaseDestinationsInMenu: _includeBaseDestinationsInMenu,
+      selectedIndexIndicatorColor: Colors.white,
       appBar: AdaptiveAppBar(
         backgroundColor: MyColor.appBarColor,
         elevation: 10,
@@ -110,7 +106,24 @@ class _HirringFormApplicantsState extends State<HirringFormApplicants> {
 }
 
 const _allDestinations = [
-  AdaptiveScaffoldDestination(
-      title: "Applicants", icon: Icons.people_alt_outlined),
-  AdaptiveScaffoldDestination(title: "Settings", icon: Icons.settings),
+  AdaptiveScaffoldDestination(title: "Channels", icon: MyFlutterApp.channel),
+  AdaptiveScaffoldDestination(title: "Hirring", icon: MyFlutterApp.hirring),
 ];
+
+class AddNewChannel extends StatefulWidget {
+  const AddNewChannel({super.key});
+
+  @override
+  State<AddNewChannel> createState() => _AddNewChannelState();
+}
+
+class _AddNewChannelState extends State<AddNewChannel> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200,
+      width: 300,
+      decoration: BoxDecoration(color: MyColor.appBarColor),
+    );
+  }
+}

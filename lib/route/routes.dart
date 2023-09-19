@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:new_marketing_dash_board/presentation/screens/channel/new_channel.dart';
 import 'package:new_marketing_dash_board/presentation/screens/hirring/hirring_form_applicants/hirring_forms_applicants.dart';
 import 'package:new_marketing_dash_board/presentation/screens/home_page.dart';
 import 'package:new_marketing_dash_board/presentation/widgets/dialoge.dart';
@@ -12,7 +13,7 @@ GoRouter routes = GoRouter(
       child: Text('404'),
     ),
   ),
-  initialLocation: "/home",
+  initialLocation: "/addchannel",
   routes: [
     GoRoute(
       path: HomeScreen.pageId,
@@ -36,6 +37,15 @@ GoRouter routes = GoRouter(
       path: MyDialogesDetails.pageId,
       builder: (context, state) {
         return const MyDialogesDetails();
+      },
+    ),
+      GoRoute(
+      path: AddChannel.pageId,  
+      builder: (context, state) {
+        return AddChannel(
+            initialIndex: state.uri.queryParameters['initialIndex'] != null
+                ? int.parse(state.uri.queryParameters['initialIndex']!)
+                : null);
       },
     ),
 
