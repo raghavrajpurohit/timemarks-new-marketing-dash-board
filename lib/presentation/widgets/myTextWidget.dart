@@ -6,14 +6,15 @@ class MyTextWidget extends StatelessWidget {
   final double? fontSize;
   final FontWeight? fontbold;
   final TextAlign? textAlign;
-  const MyTextWidget({
-    super.key,
-    required this.content,
-    this.myColor = Colors.black,
-    this.fontSize,
-    this.textAlign,
-    this.fontbold,
-  });
+  final TextOverflow? textOverflow;
+  const MyTextWidget(
+      {super.key,
+      required this.content,
+      this.myColor = Colors.black,
+      this.fontSize,
+      this.textAlign,
+      this.fontbold,
+      this.textOverflow});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class MyTextWidget extends StatelessWidget {
         color: myColor,
         fontSize: fontSize,
         fontWeight: fontbold,
+        overflow: textOverflow
       ),
     );
   }

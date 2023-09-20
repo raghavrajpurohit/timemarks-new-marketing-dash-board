@@ -1,16 +1,12 @@
 import 'package:adaptive_navigation/adaptive_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:new_marketing_dash_board/constants/colors.dart';
+import 'package:new_marketing_dash_board/constants/my_flutter_app_icons.dart';
 import 'package:new_marketing_dash_board/constants/responsive.dart';
 import 'package:new_marketing_dash_board/data/network_helper/html_js.dart';
-
-import 'package:new_marketing_dash_board/presentation/screens/channel/channel.dart.dart';
 import 'package:new_marketing_dash_board/presentation/screens/hirring/hirring.dart';
-import 'package:new_marketing_dash_board/presentation/screens/home_page.dart';
-import 'package:new_marketing_dash_board/presentation/widgets/myTextWidget.dart';
-import 'package:new_marketing_dash_board/constants/my_flutter_app_icons.dart';
-
 import 'package:new_marketing_dash_board/presentation/widgets/drawerHeader.dart';
+import 'package:new_marketing_dash_board/presentation/widgets/myTextWidget.dart';
 
 class AddChannel extends StatefulWidget {
   static const String pageId = "/addchannel";
@@ -22,6 +18,8 @@ class AddChannel extends StatefulWidget {
 }
 
 class _AddChannelState extends State<AddChannel> {
+  String? category;
+
   final bool _includeBaseDestinationsInMenu = false;
   final bool _fabInRail = true;
   late int _selectedIndex;
@@ -151,23 +149,26 @@ class _AddNewChannelState extends State<AddNewChannel> {
               )
             ],
           ),
-          Row(
+          const SizedBox(
+            height: 20,
+          ),
+          Column(
             // spacing: 25,
             children: [
-              Expanded(
-                  flex: 1,
-                  child: Material(
-                    elevation: 4,
-                    borderRadius: BorderRadius.circular(12),
+              SizedBox(
+                height: 150,
+                width: double.infinity,
+                child: Card(
+                    elevation: 2,
                     child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 35, left: 8, right: 8, bottom: 8),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: Column(children: [
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
                             const CircleAvatar(
-                              radius: 20,
+                              radius: 50,
                               backgroundImage:
                                   NetworkImage("https://picsum.photos/200/300"),
                             ),
@@ -175,17 +176,72 @@ class _AddNewChannelState extends State<AddNewChannel> {
                               content: "Upload",
                               myColor: MyColor.blueTextColor,
                             ),
-                            const MyTextWidget(
-                                content:
-                                    "It’s recommended to use a picture that’s at least 98 x 98 pixels and 4MB or less. Use a PNG or GIF (no animations) file.")
-                          ]),
+                          ],
                         ),
-                      ),
-                    ),
-                  )),
-              Expanded(flex: 8, child: Container()),
+                        const MyTextWidget(
+                          textOverflow: TextOverflow.ellipsis,
+                          content: "It’s recommended to ",
+                        )
+                      ],
+                    ))),
+              ),
             ],
-          )
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Expanded(
+              child: SizedBox(
+                  width: double.infinity,
+                  child: Card(
+                      elevation: 2,
+                      child: Container(,
+                      
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 40, right: 40),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          style: TextStyle(
+                                              color: MyColor.blackText,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14),
+                                          children: const [
+                                            TextSpan(text: "Channel Name "),
+                                            TextSpan(
+                                                text: " *",
+                                                style: TextStyle(
+                                                    color: Colors.red))
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 3,
+                                      ),
+                                      TextFormField(
+                                        decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                    width: 3,
+                                                    color: Colors.greenAccent),
+                                                borderRadius:
+                                                    BorderRadius.circular(8))),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ]),
+                        ),
+                      )))),
+
         ],
       ),
     );
